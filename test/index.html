@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Selection Demo</title>
+        <meta charset="utf-8">
+        <style>
+            ul {
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -o-user-select: none;
+                user-select: none;
+            }
+
+            .focused {
+                outline: 1px solid gray;
+            }
+
+            .selected {
+                color: white;
+                background-color: lightgray;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Single selection</h1>
+        <ul data-bind="foreach: items, selection: { data: selection, focused: focused, single: true }" tabindex="-1">
+            <li data-bind="text: text, css: { selected: selected, focused: focused }"></li>
+        </ul>
+
+        <h1>Multiple selections</h1>
+        <ul data-bind="foreach: items, selection: { data: selection, focused: focused }">
+            <li data-bind="text: text, css: { selected: selected, focused: focused }"></li>
+        </ul>
+
+        <h1>Template selection</h1>
+        <ul data-bind="template: { foreach: items, name: 'items-template' }, selection: selection"></ul>
+
+        <script type="text/html" id="items-template">
+            <li data-bind="text: text, css: { selected: selected, focused: focused }"></li>
+        </script>
+
+        <script src="knockout-2.1.0.debug.js"></script>
+        <script src="../lib/knockout.selection.js"></script>
+        <script>
+            var model = {
+                    items: ko.observableArray(),
+                    focused: ko.observable(null),
+                    selection: ko.observableArray()
+                };
+
+            for (var i = 0; i < 20; i += 1) {
+                model.items.push({
+                    text: 'Item ' + (i + 1),
+                    selected: ko.observable(false),
+                    focused: ko.observable(false)
+                });
+            }
+
+            ko.applyBindings(model, window.document.body);
+
+            model.items.push({
+                text: 'Item XX',
+                selected: ko.observable(false),
+                focused: ko.observable(false)
+            });
+        </script>
+    </body>
+</html>
