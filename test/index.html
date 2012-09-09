@@ -23,12 +23,12 @@
     </head>
     <body>
         <h1>Single selection</h1>
-        <ul data-bind="foreach: items, selection: { data: selection, focused: focused, single: true }" tabindex="-1">
+        <ul data-bind="foreach: items, selection: { data: selection, focus: focused, single: true }" tabindex="-1">
             <li data-bind="text: text, css: { selected: selected, focused: focused }"></li>
         </ul>
 
         <h1>Multiple selections</h1>
-        <ul data-bind="foreach: items, selection: { data: selection, focused: focused }">
+        <ul data-bind="foreach: items, selection: { data: selection, focus: focused }">
             <li data-bind="text: text, css: { selected: selected, focused: focused }"></li>
         </ul>
 
