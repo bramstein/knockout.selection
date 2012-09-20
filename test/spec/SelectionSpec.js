@@ -43,6 +43,11 @@ describe('Selection', function () {
                 click($('#item9'));
             });
 
+            it('has one selection', function () {
+                expect(element).selectionCountToBe(1);
+                expect($('#item9')).toHaveClass('selected');
+            });
+
             it('moves the selection to the clicked element', function () {
                 click($('#item3'));
                 expect(element).selectionCountToBe(1);
