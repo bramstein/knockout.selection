@@ -8,6 +8,7 @@
   <link rel="stylesheet" type="text/css" href="lib/jasmine-1.2.0/jasmine.css">
   <script type="text/javascript" src="lib/jasmine-1.2.0/jasmine.js"></script>
   <script type="text/javascript" src="lib/jasmine-1.2.0/jasmine-html.js"></script>
+  <script type="text/javascript" src="lib/jquery-1.8.1.js"></script>
 
   <script src="knockout-2.1.0.debug.js"></script>
 
@@ -15,8 +16,8 @@
   <script src="../lib/knockout.selection.js"></script>
         
   <!-- include spec files here... -->
-  <script type="text/javascript" src="spec/SelectionSpec.js"></script>
   <script type="text/javascript" src="spec/SpecHelper.js"></script>
+  <script type="text/javascript" src="spec/SelectionSpec.js"></script>
 
   <script type="text/javascript">
     (function() {
@@ -50,5 +51,29 @@
 </head>
 
 <body>
+  <div style="display: none" id="test"></div>
+
+  <!-- Test elements -->
+  <div style="display: none">
+    <div id="single">
+      <ul data-bind="foreach: items, selection: { data: selection, single: true }" tabindex="-1">
+        <li data-bind="attr: { id: id }, css: { selected: selected }"></li>
+      </ul>
+    </div>
+
+    <div id="multi">
+      <ul data-bind="foreach: items, selection: { data: selection, focus: focus }" tabindex="-1">
+        <li data-bind="attr: { id: id }, css: { selected: selected, focused: focused }"></li>
+      </ul>
+    </div>
+
+    <div id="template">
+      <ul data-bind="template: { foreach: items, name: 'items-template' }, selection: selection" tabindex="-1"></ul>
+    </div>
+
+    <script type="text/html" id="items-template">
+      <li data-bind="attr: { id: id }, css: { selected: selected, focused: focused }"></li>
+    </script>
+  </div>
 </body>
 </html>
