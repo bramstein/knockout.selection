@@ -76,5 +76,12 @@ describe('Selection', function () {
                 expect($('#item9')).toNotHaveClass('selected');
             });
         });
+
+        it('focuses selected element', function () {
+            click($('#item3'));
+            var focus = model.focus();
+            expect(focus.id).toBe('item3');
+            expect(focus.focused()).toBeTruthy();
+        });
     });
 });
