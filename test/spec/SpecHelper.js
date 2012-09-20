@@ -6,8 +6,14 @@ function useTestElement(selector) {
     return testElement[0];
 }
 
-function rightClick(element) {
-    var e = jQuery.Event("mousedown", { which: 1});
+function click(element, options) {
+    var defaultOptions = {
+        which: 1,
+        shiftKey: false,
+        ctrlKey: false
+    };
+    options = $.extend(defaultOptions, options);
+    var e = jQuery.Event("mousedown", options);
     element.trigger(e);
 }
 

@@ -33,27 +33,42 @@ describe('Selection', function () {
             });
 
             it('selects the clicked element', function () {
-                rightClick($('#item3'));
+                click($('#item3'));
                 expect(element).selectionCountToBe(1);
             });
         });
 
         describe('with one selected item', function () {
             beforeEach(function () {
-                rightClick($('#item2'));
+                click($('#item9'));
             });
 
             it('moves the selection to the clicked element', function () {
-                rightClick($('#item3'));
+                click($('#item3'));
                 expect(element).selectionCountToBe(1);
                 expect($('#item3')).toHaveClass('selected');
-                expect($('#item2')).toNotHaveClass('selected');
+                expect($('#item9')).toNotHaveClass('selected');
             });
 
             it('ignores clicks on selected element', function () {
-                rightClick($('#item2'));
+                click($('#item9'));
                 expect(element).selectionCountToBe(1);
-                expect($('#item2')).toHaveClass('selected');
+                expect($('#item9')).toHaveClass('selected');
+            });
+
+            it('ignores shift', function () {
+                click($('#item3'), { shiftKey: true });
+                expect(element).selectionCountToBe(1);
+                expect($('#item3')).toHaveClass('selected');
+                expect($('#item4')).toNotHaveClass('selected');
+                expect($('#item9')).toNotHaveClass('selected');
+            });
+
+            it('ignores ctrl', function () {
+                click($('#item3'), { ctrlKey: true });
+                expect(element).selectionCountToBe(1);
+                expect($('#item3')).toHaveClass('selected');
+                expect($('#item9')).toNotHaveClass('selected');
             });
         });
     });
