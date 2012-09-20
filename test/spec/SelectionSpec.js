@@ -49,6 +49,12 @@ describe('Selection', function () {
                 expect($('#item3')).toHaveClass('selected');
                 expect($('#item2')).toNotHaveClass('selected');
             });
+
+            it('ignores clicks on selected element', function () {
+                rightClick($('#item2'));
+                expect(element).selectionCountToBe(1);
+                expect($('#item2')).toHaveClass('selected');
+            });
         });
     });
 });
