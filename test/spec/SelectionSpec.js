@@ -40,25 +40,25 @@ describe('Selection', function () {
 
         describe('with one selected item', function () {
             beforeEach(function () {
-                click($('#item9'));
+                click($('#item7'));
             });
 
             it('has one selection', function () {
                 expect(element).selectionCountToBe(1);
-                expect($('#item9')).toHaveClass('selected');
+                expect($('#item7')).toHaveClass('selected');
             });
 
             it('moves the selection to the clicked element', function () {
                 click($('#item3'));
                 expect(element).selectionCountToBe(1);
                 expect($('#item3')).toHaveClass('selected');
-                expect($('#item9')).toNotHaveClass('selected');
+                expect($('#item7')).toNotHaveClass('selected');
             });
 
             it('ignores clicks on selected element', function () {
-                click($('#item9'));
+                click($('#item7'));
                 expect(element).selectionCountToBe(1);
-                expect($('#item9')).toHaveClass('selected');
+                expect($('#item7')).toHaveClass('selected');
             });
 
             it('ignores shift', function () {
@@ -66,15 +66,27 @@ describe('Selection', function () {
                 expect(element).selectionCountToBe(1);
                 expect($('#item3')).toHaveClass('selected');
                 expect($('#item4')).toNotHaveClass('selected');
-                expect($('#item9')).toNotHaveClass('selected');
+                expect($('#item7')).toNotHaveClass('selected');
             });
 
             it('ignores ctrl', function () {
                 click($('#item3'), { ctrlKey: true });
                 expect(element).selectionCountToBe(1);
                 expect($('#item3')).toHaveClass('selected');
-                expect($('#item9')).toNotHaveClass('selected');
+                expect($('#item7')).toNotHaveClass('selected');
             });
+
+            it('selects next element on down-arrow', function () {
+                arrowDown($('ul', element));
+                expect($('#item7')).toNotHaveClass('selected');
+                expect($('#item8')).toHaveClass('selected');
+            }); 
+            
+            it('selects previous element on up-arrow', function () {
+                arrowUp($('ul', element));
+                expect($('#item7')).toNotHaveClass('selected');
+                expect($('#item6')).toHaveClass('selected');
+            }); 
         });
 
         it('focuses selected element', function () {

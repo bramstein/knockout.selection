@@ -13,8 +13,36 @@ function click(element, options) {
         ctrlKey: false
     };
     options = $.extend(defaultOptions, options);
-    var e = jQuery.Event("mousedown", options);
+    var e = $.Event("mousedown", options);
     element.trigger(e);
+}
+
+function keyDown(element, options) {
+    var defaultOptions = {
+        shiftKey: false,
+        ctrlKey: false
+    };
+    options = $.extend(defaultOptions, options);
+    var e = $.Event("keydown", options);
+    element.trigger(e);
+}
+
+function arrowDown(element) {
+    keyDown(element, {
+        which: 40
+    });
+}
+
+function arrowUp(element) {
+    keyDown(element, {
+        which: 38
+    });
+}
+
+function space(element) {
+    keyDown(element, {
+        which: 32
+    });
 }
 
 beforeEach(function() {
