@@ -80,12 +80,20 @@ describe('Selection', function () {
                 arrowDown($('ul', element));
                 expect($('#item7')).toNotHaveClass('selected');
                 expect($('#item8')).toHaveClass('selected');
+                expect(element).selectionCountToBe(1);
             }); 
             
             it('selects previous element on up-arrow', function () {
                 arrowUp($('ul', element));
                 expect($('#item7')).toNotHaveClass('selected');
                 expect($('#item6')).toHaveClass('selected');
+                expect(element).selectionCountToBe(1);
+            }); 
+
+            it('deselects item on space', function () {
+                space($('ul', element));
+                expect($('#item7')).toNotHaveClass('selected');
+                expect(element).selectionCountToBe(0);
             }); 
         });
 
