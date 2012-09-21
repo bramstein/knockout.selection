@@ -29,12 +29,12 @@ describe('Selection', function () {
 
         describe('with no selection', function () {
             it('has no elements marks as selected', function () {
-                expect(element).selectionCountToBe(0);
+                expect(element).to.have.selectionCount(0);
             });
 
             it('selects the clicked element', function () {
                 click($('#item3'));
-                expect(element).selectionCountToBe(1);
+                expect(element).to.have.selectionCount(1);
             });
         });
 
@@ -44,64 +44,64 @@ describe('Selection', function () {
             });
 
             it('has one selection', function () {
-                expect(element).selectionCountToBe(1);
-                expect($('#item7')).toHaveClass('selected');
+                expect(element).to.have.selectionCount(1);
+                expect($('#item7')).to.have.cssClass('selected');
             });
 
             it('moves the selection to the clicked element', function () {
                 click($('#item3'));
-                expect(element).selectionCountToBe(1);
-                expect($('#item3')).toHaveClass('selected');
-                expect($('#item7')).toNotHaveClass('selected');
+                expect(element).to.have.selectionCount(1);
+                expect($('#item3')).to.have.cssClass('selected');
+                expect($('#item7')).to.not.have.cssClass('selected');
             });
 
             it('ignores clicks on selected element', function () {
                 click($('#item7'));
-                expect(element).selectionCountToBe(1);
-                expect($('#item7')).toHaveClass('selected');
+                expect(element).to.have.selectionCount(1);
+                expect($('#item7')).to.have.cssClass('selected');
             });
 
             it('ignores shift', function () {
                 click($('#item3'), { shiftKey: true });
-                expect(element).selectionCountToBe(1);
-                expect($('#item3')).toHaveClass('selected');
-                expect($('#item4')).toNotHaveClass('selected');
-                expect($('#item7')).toNotHaveClass('selected');
+                expect(element).to.have.selectionCount(1);
+                expect($('#item3')).to.have.cssClass('selected');
+                expect($('#item4')).to.not.have.cssClass('selected');
+                expect($('#item7')).to.not.have.cssClass('selected');
             });
 
             it('ignores ctrl', function () {
                 click($('#item3'), { ctrlKey: true });
-                expect(element).selectionCountToBe(1);
-                expect($('#item3')).toHaveClass('selected');
-                expect($('#item7')).toNotHaveClass('selected');
+                expect(element).to.have.selectionCount(1);
+                expect($('#item3')).to.have.cssClass('selected');
+                expect($('#item7')).to.not.have.cssClass('selected');
             });
 
             it('selects next element on down-arrow', function () {
                 arrowDown($('ul', element));
-                expect($('#item7')).toNotHaveClass('selected');
-                expect($('#item8')).toHaveClass('selected');
-                expect(element).selectionCountToBe(1);
+                expect($('#item7')).to.not.have.cssClass('selected');
+                expect($('#item8')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
             }); 
             
             it('selects previous element on up-arrow', function () {
                 arrowUp($('ul', element));
-                expect($('#item7')).toNotHaveClass('selected');
-                expect($('#item6')).toHaveClass('selected');
-                expect(element).selectionCountToBe(1);
+                expect($('#item7')).to.not.have.cssClass('selected');
+                expect($('#item6')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
             }); 
 
             it('deselects item on space', function () {
                 space($('ul', element));
-                expect($('#item7')).toNotHaveClass('selected');
-                expect(element).selectionCountToBe(0);
+                expect($('#item7')).to.not.have.cssClass('selected');
+                expect(element).to.have.selectionCount(0);
             }); 
         });
 
         it('focuses selected element', function () {
             click($('#item3'));
             var focus = model.focus();
-            expect(focus.id).toBe('item3');
-            expect(focus.focused()).toBeTruthy();
+            expect(focus.id).to.be('item3');
+            expect(focus.focused()).to.be.ok();
         });
     });
 });

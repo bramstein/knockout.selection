@@ -46,16 +46,28 @@ function space(element) {
 }
 
 beforeEach(function() {
+    expect.Assertion.prototype.cssClass = function (expected) {
+        var $element = $(this.obj);
+        var elementClass = $element.attr("class");
 
-    this.addMatchers({
-        selectionCountToBe: function (expectedCount) {
-            return $('.selected', this.actual).length === expectedCount;
-        },
-        toHaveClass: function (expectedClass) {
-            return $(this.actual).hasClass(expectedClass);
-        },
-        toNotHaveClass: function (unexpectedClass) {
-            return !$(this.actual).hasClass(unexpectedClass);
+        if (this.flags.not) {
+            if (elementClass) {
+                expect(elementClass).to.not.contain(expected);
+            }
+            expect($element.hasClass(expected)).to.not.be.ok();
+        } else {
+            expect(elementClass).to.contain(expected);
+            expect($element.hasClass(expected)).to.be.ok();
         }
-    });
+
+        return this;
+    };
+
+    expect.Assertion.prototype.selectionCount = function (expected) {
+        var selectionCount = $('.selected', this.obj).length;
+
+        expect(selectionCount).to.be(expected);
+        
+        return this;
+    };
 });
