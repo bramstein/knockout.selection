@@ -71,7 +71,8 @@
                 var ansi = {
                     colors: {
                         "green" : 32,
-                        "red"   : 31
+                        "red"   : 31,
+                        "gray"  : 37
                     },
                     colorize: function(text, color) {
                         var color_code = this.colors[color];
@@ -89,7 +90,8 @@
                 }
 
 				function printSuite(suite, indent) {
-                    console.log(indent + $('> h1', suite).text());
+                    var title = $('> h1', suite).text();
+                    console.log(indent + ansi.colorize(title, 'gray'));
                     indent += '  ';
                     $('> ul > li.test', suite).each(function (index, test) {
                         printTest(test, indent);
