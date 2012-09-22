@@ -24,7 +24,7 @@ Set to `true` if the selection model should only allow a single selected item. I
 
 ### `properties` <object>
 
-The selection binding will be default look for `selected` and `focused` observable properties on your `foreach` items and set them to true when the item is selected or focused. Using the `properties` option you can override these default property names to something else. For example:
+The selection binding will by default look for `selected` and `focused` observable properties on your `foreach` items and set them to true when the item is selected or focused. Using the `properties` option you can override these default property names to something else. For example:
 
     data-bind="foreach: mylist, selection: { data: mylistSelection, properties: { selected: 'active', focused: 'highlight' }"
 
