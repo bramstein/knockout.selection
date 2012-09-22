@@ -1,4 +1,5 @@
-/*global phantom:true, console:true, WebPage:true, Date:true*/
+// TODO should create a json structure that can be handed to
+// a console formatting program.
 (function () {
     phantom.injectJs('lib/jquery-1.8.1.js');
 	var url, timeout, page, defer;
