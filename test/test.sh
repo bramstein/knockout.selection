@@ -1,1 +1,1 @@
-phantomjs run-mocha.js tests.html
+phantomjs lib/run-mocha.js tests.html
