@@ -65,6 +65,22 @@ describe('Selection', function () {
                 expect($('#item3')).to.have.cssClass('selected');
                 expect(element).to.have.selectionCount(1);
             });
+
+            describe('when first element is focused', function () {
+                beforeEach(function () {
+                    model.focusItem(0);
+                });
+                
+                it('selects the focused element on arrow up');
+            });
+
+            describe('when last element is focused', function () {
+                beforeEach(function () {
+                    model.focusItem(9);
+                });
+                
+                it('selects the focused element on arrow down');
+            });
         });
 
         describe('with one selected item', function () {
