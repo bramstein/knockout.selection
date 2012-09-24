@@ -42,9 +42,11 @@
     <script src="spec.helper.js"></script>
     <script src="spec/knockout.selection.spec.js"></script>
     <script>
-      mocha.run(function () {
-          $('#mocha').addClass('finished');
-      });
+      if (window.mochaPhantomJS) {
+        mochaPhantomJS.run();
+      } else {
+        mocha.run();
+      }
     </script>
   </body>
 </html>
