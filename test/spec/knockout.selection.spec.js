@@ -84,7 +84,12 @@ describe('Selection', function () {
                     model.focusItem(9);
                 });
                 
-                it('selects the focused element on arrow down');
+                it('selects the focused element on arrow down', function () {
+                    model.focusItem(9);
+                    arrowDown($('ul', element));
+                    expect($('#item9')).to.have.cssClass('selected');
+                    expect(element).to.have.selectionCount(1);
+                });
             });
         });
 
