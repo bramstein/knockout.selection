@@ -36,6 +36,13 @@ describe('Selection', function () {
                 click($('#item3'));
                 expect(element).to.have.selectionCount(1);
             });
+
+            it('select focused element on space', function () {
+                model.focus(model.items()[3]);
+                space($('ul', element));
+                expect($('#item4')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
         });
 
         describe('with one selected item', function () {
