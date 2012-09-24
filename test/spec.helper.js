@@ -56,6 +56,7 @@ beforeEach(function() {
             }
             expect($element.hasClass(expected)).to.not.be.ok();
         } else {
+            expect(elementClass).to.not.be(undefined);
             expect(elementClass).to.contain(expected);
             expect($element.hasClass(expected)).to.be.ok();
         }

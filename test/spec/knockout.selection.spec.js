@@ -17,7 +17,15 @@ describe('Selection', function () {
         model = {
             items: ko.observableArray(createItems(10)),
             selection: ko.observableArray(),
-            focus: ko.observable()
+            focus: ko.observable(),
+            focusItem: function (index) {
+                this.items().forEach(function (item) {
+                    item.focused(false);
+                });
+                var item = this.items()[index];
+                item.focused(true);
+                this.focus(item);
+            }
         };
     });
 
@@ -38,9 +46,23 @@ describe('Selection', function () {
             });
 
             it('select focused element on space', function () {
-                model.focus(model.items()[3]);
+                model.focusItem(3);
                 space($('ul', element));
                 expect($('#item4')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects the element next to the focused element on arrow down', function () {
+                model.focusItem(3);
+                arrowDown($('ul', element));
+                expect($('#item5')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects the element before to the focused element on arrow up', function () {
+                model.focusItem(3);
+                arrowUp($('ul', element));
+                expect($('#item3')).to.have.cssClass('selected');
                 expect(element).to.have.selectionCount(1);
             });
         });
