@@ -57,7 +57,14 @@
         function printFailPassString() {
 			var failPassString = page.evaluate(function () {
                 return $('#mocha .test').map(function (index, element) {
-                    return $(element).hasClass('fail') ? 'F' : '.';
+                    var $element= $(element);
+                    if ($element.hasClass('fail')) {
+                        return 'F';
+                    }
+                    if ($element.hasClass('pending')) {
+                        return 'P';
+                    }
+                    return '.';
                 }).get().join('');
 			});
 
@@ -73,7 +80,8 @@
                     colors: {
                         "green" : 32,
                         "red"   : 31,
-                        "gray"  : 37
+                        "gray"  : 37,
+                        "yellow" : 33
                     },
                     colorize: function(text, color) {
                         var color_code = this.colors[color];
@@ -84,9 +92,17 @@
                 function printTest(test, indent) {
                     var title = $('> h2', test).first()[0].innerText;
                     var duration = $('> h2 > span', test).text();
-                    var indicator = $(test).hasClass('fail') ?
-                        ansi.colorize('(FAIL)', 'red') :
-                        ansi.colorize(duration, 'green');
+                    var $test = $(test);
+
+                    var indicator = null;
+                    if ($test.hasClass('fail')) {
+                        indicator = ansi.colorize('(FAIL)', 'red');
+                    } else if ($test.hasClass('pending')) {
+                        indicator = ansi.colorize('(PENDING)', 'yellow');
+                    } else {
+                        indicator = ansi.colorize(duration, 'green');
+                    }
+
                     console.log(indent + title + ' ' + indicator);
                 }
 
