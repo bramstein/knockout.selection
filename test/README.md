@@ -7,4 +7,4 @@ You can run the tests in the browser by opening tests.html. It is also
 posible to run the tests from the console using
 [PhantomJS](http://phantomjs.org/), just run the `test.sh` script.
 You can use any of the reportes from [PhantomJS Runners for Mocha](https://github.com/metaskills/mocha-phantomjs)
-by specifying the runner as an argument to `test.js {dot|spec|tap|min|list|dot|teamcity}`
+by specifying the reporter as an argument to `test.js {dot|spec|tap|min|list|dot|teamcity}`
