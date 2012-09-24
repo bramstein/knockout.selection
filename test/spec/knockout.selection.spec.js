@@ -71,7 +71,12 @@ describe('Selection', function () {
                     model.focusItem(0);
                 });
                 
-                it('selects the focused element on arrow up');
+                it('selects the focused element on arrow up', function () {
+                    model.focusItem(0);
+                    arrowUp($('ul', element));
+                    expect($('#item1')).to.have.cssClass('selected');
+                    expect(element).to.have.selectionCount(1);
+                });
             });
 
             describe('when last element is focused', function () {
