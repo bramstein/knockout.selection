@@ -3,7 +3,7 @@ function createItems(size) {
 
     for (var i = 0; i < size; i += 1) {
         result.push({
-            id: 'item' + (i + 1),
+            id: 'item' + i,
             selected: ko.observable(false),
             focused: ko.observable(false)
         });
@@ -48,21 +48,21 @@ describe('Selection', function () {
             it('select focused element on space', function () {
                 model.focusItem(3);
                 space($('ul', element));
-                expect($('#item4')).to.have.cssClass('selected');
+                expect($('#item3')).to.have.cssClass('selected');
                 expect(element).to.have.selectionCount(1);
             });
 
             it('selects the element next to the focused element on arrow down', function () {
                 model.focusItem(3);
                 arrowDown($('ul', element));
-                expect($('#item5')).to.have.cssClass('selected');
+                expect($('#item4')).to.have.cssClass('selected');
                 expect(element).to.have.selectionCount(1);
             });
 
             it('selects the element before to the focused element on arrow up', function () {
                 model.focusItem(3);
                 arrowUp($('ul', element));
-                expect($('#item3')).to.have.cssClass('selected');
+                expect($('#item2')).to.have.cssClass('selected');
                 expect(element).to.have.selectionCount(1);
             });
 
@@ -74,7 +74,7 @@ describe('Selection', function () {
                 it('selects the focused element on arrow up', function () {
                     model.focusItem(0);
                     arrowUp($('ul', element));
-                    expect($('#item1')).to.have.cssClass('selected');
+                    expect($('#item0')).to.have.cssClass('selected');
                     expect(element).to.have.selectionCount(1);
                 });
             });
