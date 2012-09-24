@@ -21,7 +21,7 @@ describe('Selection', function () {
         };
     });
 
-    describe('Single selection', function () {
+    describe('in single selection mode', function () {
         beforeEach(function () {
             element = useTestElement('#single');
             ko.applyBindings(model, element);
