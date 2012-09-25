@@ -1,1 +1,1 @@
-phantomjs lib/mocha-phantomjs.coffee tests.html $1
+phantomjs ../vendor/mocha-phantomjs.coffee tests.html $1
