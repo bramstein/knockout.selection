@@ -1,0 +1,13 @@
+{
+    "name": "knockout.selection",
+    "version": "0.0.1",
+    "author": "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com)",
+    "dependencies": {},
+    "private": true,
+    "scripts": {
+        "test": "phantomjs vendor/mocha-phantomjs.coffee test/tests.html"
+    },
+    "devDependencies": {
+        "phantomjs": "=0.0.8"
+    }
+}
