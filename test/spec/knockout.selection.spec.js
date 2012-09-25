@@ -3,7 +3,7 @@ function createItems(size) {
 
     for (var i = 0; i < size; i += 1) {
         result.push({
-            id: 'item' + (i + 1),
+            id: 'item' + i,
             selected: ko.observable(false),
             focused: ko.observable(false)
         });
@@ -17,11 +17,19 @@ describe('Selection', function () {
         model = {
             items: ko.observableArray(createItems(10)),
             selection: ko.observableArray(),
-            focus: ko.observable()
+            focus: ko.observable(),
+            focusItem: function (index) {
+                this.items().forEach(function (item) {
+                    item.focused(false);
+                });
+                var item = this.items()[index];
+                item.focused(true);
+                this.focus(item);
+            }
         };
     });
 
-    describe('Single selection', function () {
+    describe('in single selection mode', function () {
         beforeEach(function () {
             element = useTestElement('#single');
             ko.applyBindings(model, element);
@@ -35,6 +43,53 @@ describe('Selection', function () {
             it('selects the clicked element', function () {
                 click($('#item3'));
                 expect(element).to.have.selectionCount(1);
+            });
+
+            it('select focused element on space', function () {
+                model.focusItem(3);
+                space($('ul', element));
+                expect($('#item3')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects the element next to the focused element on arrow down', function () {
+                model.focusItem(3);
+                arrowDown($('ul', element));
+                expect($('#item4')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects the element before to the focused element on arrow up', function () {
+                model.focusItem(3);
+                arrowUp($('ul', element));
+                expect($('#item2')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            describe('when first element is focused', function () {
+                beforeEach(function () {
+                    model.focusItem(0);
+                });
+                
+                it('selects the focused element on arrow up', function () {
+                    model.focusItem(0);
+                    arrowUp($('ul', element));
+                    expect($('#item0')).to.have.cssClass('selected');
+                    expect(element).to.have.selectionCount(1);
+                });
+            });
+
+            describe('when last element is focused', function () {
+                beforeEach(function () {
+                    model.focusItem(9);
+                });
+                
+                it('selects the focused element on arrow down', function () {
+                    model.focusItem(9);
+                    arrowDown($('ul', element));
+                    expect($('#item9')).to.have.cssClass('selected');
+                    expect(element).to.have.selectionCount(1);
+                });
             });
         });
 
