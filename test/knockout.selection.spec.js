@@ -36,7 +36,7 @@ describe('Selection', function () {
         });
 
         describe('with no selection', function () {
-            it('has no elements marks as selected', function () {
+            it('has no elements marked as selected', function () {
                 expect(element).to.have.selectionCount(0);
             });
 
@@ -167,7 +167,7 @@ describe('Selection', function () {
         });
 
         describe('with no selection', function () {
-            it('has no elements marks as selected', function () {
+            it('has no elements marked as selected', function () {
                 expect(element).to.have.selectionCount(0);
             });
         });
