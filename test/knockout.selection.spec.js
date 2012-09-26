@@ -159,4 +159,35 @@ describe('Selection', function () {
             expect(focus.focused()).to.be.ok();
         });
     });
+
+    describe('in multiple selection mode', function () {
+        beforeEach(function () {
+            element = useTestElement('#multi');
+            ko.applyBindings(model, element);
+        });
+
+        describe('with no selection', function () {
+            it('has no elements marks as selected', function () {
+                expect(element).to.have.selectionCount(0);
+            });
+        });
+
+        describe('with one selected item', function () {
+            beforeEach(function () {
+                click($('#item7'));
+            });
+
+            it('expands the selection with ctrl-click', function () {
+                click($('#item3'), { ctrlKey: true });
+                expect(element).to.have.selectionCount(2);
+                expect($('#item3')).to.have.cssClass('selected');
+                expect($('#item7')).to.have.cssClass('selected');
+            });
+
+            it('expands the selection with shift-click', function () {
+                click($('#item3'), { shiftKey: true });
+                expect(element).to.have.selectionCount(5);
+            });
+        });
+    });
 });
