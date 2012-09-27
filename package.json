@@ -5,7 +5,7 @@
     "dependencies": {},
     "private": true,
     "scripts": {
-        "test": "phantomjs vendor/mocha-phantomjs.coffee test/tests.html"
+        "test": "phantomjs vendor/mocha-phantomjs.coffee test/index.html"
     },
     "devDependencies": {
         "phantomjs": "=0.0.8"
