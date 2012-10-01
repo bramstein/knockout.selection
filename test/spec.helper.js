@@ -48,17 +48,12 @@ function space(element) {
 beforeEach(function() {
     expect.Assertion.prototype.cssClass = function (expected) {
         var $element = $(this.obj);
-        var elementClass = $element.attr("class");
+        var elementClasses = ($element.attr('class') || '').split(' ');
 
         if (this.flags.not) {
-            if (elementClass) {
-                expect(elementClass).to.not.contain(expected);
-            }
-            expect($element.hasClass(expected)).to.not.be.ok();
+            expect(elementClasses).to.not.contain(expected);
         } else {
-            expect(elementClass).to.not.be(undefined);
-            expect(elementClass).to.contain(expected);
-            expect($element.hasClass(expected)).to.be.ok();
+            expect(elementClasses).to.contain(expected);
         }
 
         return this;
@@ -67,7 +62,10 @@ beforeEach(function() {
     expect.Assertion.prototype.selectionCount = function (expected) {
         var selectionCount = $('.selected', this.obj).length;
 
-        expect(selectionCount).to.be(expected);
+        this.assert(
+            selectionCount === expected, 
+            function(){ return 'expected list to have ' + expected + ' selected items'; },
+            function(){ return 'expected list to not have ' + expected + ' selected items'; });
         
         return this;
     };
