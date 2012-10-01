@@ -19,11 +19,7 @@ describe('Selection', function () {
             selection: ko.observableArray(),
             focus: ko.observable(),
             focusItem: function (index) {
-                this.items().forEach(function (item) {
-                    item.focused(false);
-                });
                 var item = this.items()[index];
-                item.focused(true);
                 this.focus(item);
             }
         };
@@ -72,7 +68,6 @@ describe('Selection', function () {
                 });
                 
                 it('selects the focused element on arrow up', function () {
-                    model.focusItem(0);
                     arrowUp($('ul', element));
                     expect($('#item0')).to.have.cssClass('selected');
                     expect(element).to.have.selectionCount(1);
@@ -85,7 +80,6 @@ describe('Selection', function () {
                 });
                 
                 it('selects the focused element on arrow down', function () {
-                    model.focusItem(9);
                     arrowDown($('ul', element));
                     expect($('#item9')).to.have.cssClass('selected');
                     expect(element).to.have.selectionCount(1);
