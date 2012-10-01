@@ -64,8 +64,8 @@ beforeEach(function() {
 
         this.assert(
             selectionCount === expected, 
-            function(){ return 'expected list to have ' + expected + ' selected items'; },
-            function(){ return 'expected list to not have ' + expected + ' selected items'; });
+            function(){ return 'expected list to have ' + expected + ' selected items but got '+selectionCount; },
+            function(){ return 'expected list to not have ' + expected + ' selected items but got '+selectionCount; });
         
         return this;
     };

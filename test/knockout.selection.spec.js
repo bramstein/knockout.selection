@@ -227,22 +227,26 @@ describe('Selection', function () {
             });
         });
 
-        describe('with one selected item', function () {
+        describe('with selected items', function () {
             beforeEach(function () {
                 click($('#item7'));
+                click($('#item4'), { ctrlKey: true });
+                click($('#item2'), { ctrlKey: true });
             });
 
             it('expands the selection with ctrl-click', function () {
                 click($('#item3'), { ctrlKey: true });
-                expect(element).to.have.selectionCount(2);
-                expect($('#item3')).to.have.cssClass('selected');
-                expect($('#item7')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(4);
+                [2,3,4,7].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
             });
 
+
             it('expands the selection with shift-click', function () {
-                click($('#item3'), { shiftKey: true });
-                expect(element).to.have.selectionCount(5);
-                [3,4,5,6,7].forEach(function (index) {
+                click($('#item5'), { shiftKey: true });
+                expect(element).to.have.selectionCount(4);
+                [2,3,4,5].forEach(function (index) {
                     expect($('#item'+index)).to.have.cssClass('selected');
                 });
             });
