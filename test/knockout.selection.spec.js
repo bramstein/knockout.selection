@@ -164,6 +164,56 @@ describe('Selection', function () {
             it('has no elements marked as selected', function () {
                 expect(element).to.have.selectionCount(0);
             });
+
+            it('selects the clicked element', function () {
+                click($('#item3'));
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('select focused element on space', function () {
+                model.focusItem(3);
+                space($('ul', element));
+                expect($('#item3')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects the element next to the focused element on arrow down', function () {
+                model.focusItem(3);
+                arrowDown($('ul', element));
+                expect($('#item4')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects the element before to the focused element on arrow up', function () {
+                model.focusItem(3);
+                arrowUp($('ul', element));
+                expect($('#item2')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            describe('when first element is focused', function () {
+                beforeEach(function () {
+                    model.focusItem(0);
+                });
+                
+                it('selects the focused element on arrow up', function () {
+                    arrowUp($('ul', element));
+                    expect($('#item0')).to.have.cssClass('selected');
+                    expect(element).to.have.selectionCount(1);
+                });
+            });
+
+            describe('when last element is focused', function () {
+                beforeEach(function () {
+                    model.focusItem(9);
+                });
+                
+                it('selects the focused element on arrow down', function () {
+                    arrowDown($('ul', element));
+                    expect($('#item9')).to.have.cssClass('selected');
+                    expect(element).to.have.selectionCount(1);
+                });
+            });
         });
 
         describe('with one selected item', function () {
