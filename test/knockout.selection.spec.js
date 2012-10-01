@@ -302,6 +302,50 @@ describe('Selection', function () {
                     expect($('#item'+index)).to.have.cssClass('selected');
                 });
             });
+
+            it('expands the selection downward on ctrl-down-arrow', function () {
+                arrowDown($('ul', element), { ctrlKey: true });
+                expect(element).to.have.selectionCount(4);
+                [2,3,4,7].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('expands the selection further downward on successive ctrl-down-arrow', function () {
+                arrowDown($('ul', element), { ctrlKey: true });
+                arrowDown($('ul', element), { ctrlKey: true });
+                expect(element).to.have.selectionCount(4);
+                [2,3,4,7].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('expands the selection upward on ctrl-up-arrow', function () {
+                arrowUp($('ul', element), { ctrlKey: true });
+                expect(element).to.have.selectionCount(4);
+                [1,2,4,7].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('expands the selection further upward on successive ctrl-up-arrow', function () {
+                arrowUp($('ul', element), { ctrlKey: true });
+                arrowUp($('ul', element), { ctrlKey: true });
+                expect(element).to.have.selectionCount(5);
+                [0,1,2,4,7].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('does not move the selection anchor on successive ctrl-up/down-arrow', function () {
+                arrowDown($('ul', element), { ctrlKey: true });
+                arrowDown($('ul', element), { ctrlKey: true });
+                arrowUp($('ul', element), { ctrlKey: true });
+                expect(element).to.have.selectionCount(4);
+                [2,3,4,7].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
+            });
         });
     });
 });
