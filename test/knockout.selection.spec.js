@@ -242,6 +242,9 @@ describe('Selection', function () {
             it('expands the selection with shift-click', function () {
                 click($('#item3'), { shiftKey: true });
                 expect(element).to.have.selectionCount(5);
+                [3,4,5,6,7].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
             });
         });
     });
