@@ -48,14 +48,14 @@ describe('Selection', function () {
                 expect(element).to.have.selectionCount(1);
             });
 
-            it('selects the element next to the focused element on arrow down', function () {
+            it('selects the element after the focused element on arrow down', function () {
                 model.focusItem(3);
                 arrowDown($('ul', element));
                 expect($('#item4')).to.have.cssClass('selected');
                 expect(element).to.have.selectionCount(1);
             });
 
-            it('selects the element before to the focused element on arrow up', function () {
+            it('selects the element before the focused element on arrow up', function () {
                 model.focusItem(3);
                 arrowUp($('ul', element));
                 expect($('#item2')).to.have.cssClass('selected');
@@ -177,19 +177,30 @@ describe('Selection', function () {
                 expect(element).to.have.selectionCount(1);
             });
 
-            it('selects the element next to the focused element on arrow down', function () {
+            it('selects the element after the focused element on arrow down', function () {
                 model.focusItem(3);
                 arrowDown($('ul', element));
                 expect($('#item4')).to.have.cssClass('selected');
                 expect(element).to.have.selectionCount(1);
             });
 
-            it('selects the element before to the focused element on arrow up', function () {
+            it('selects the element before the focused element on arrow up', function () {
                 model.focusItem(3);
                 arrowUp($('ul', element));
                 expect($('#item2')).to.have.cssClass('selected');
                 expect(element).to.have.selectionCount(1);
             });
+
+            it('selects the focused and element after the focused element on shift arrow down'/*, function () {
+                // Seems to reproduce a bug in the selection model
+                model.focusItem(3);
+                arrowDown($('ul', element), { shiftKey: true });
+                expect($('#item3')).to.have.cssClass('selected');
+                expect($('#item4')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            }*/);
+
+            it('selects the focused and element before the focused element on shift arrow up');
 
             describe('when first element is focused', function () {
                 beforeEach(function () {
