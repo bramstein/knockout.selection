@@ -265,6 +265,14 @@ describe('Selection', function () {
                     expect($('#item'+index)).to.have.cssClass('selected');
                 });
             });
+
+            it('expands the selection upward on shift-up-arrow', function () {
+                arrowUp($('ul', element), { shiftKey: true });
+                expect(element).to.have.selectionCount(2);
+                [1,2].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
+            });
         });
     });
 });
