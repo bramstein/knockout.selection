@@ -291,6 +291,17 @@ describe('Selection', function () {
                     expect($('#item'+index)).to.have.cssClass('selected');
                 });
             });
+
+            it('does not move the selection anchor on successive shift-up/down-arrow', function () {
+                arrowDown($('ul', element), { shiftKey: true });
+                arrowDown($('ul', element), { shiftKey: true });
+                arrowUp($('ul', element), { shiftKey: true });
+                arrowDown($('ul', element), { shiftKey: true });
+                expect(element).to.have.selectionCount(3);
+                [2,3,4].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
+            });
         });
     });
 });
