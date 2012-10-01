@@ -27,22 +27,22 @@ function keyDown(element, options) {
     element.trigger(e);
 }
 
-function arrowDown(element) {
-    keyDown(element, {
-        which: 40
-    });
+function arrowDown(element, options) {
+    var defaultOptions = { which: 40 };
+    options = $.extend(defaultOptions, options);
+    keyDown(element, options);
 }
 
-function arrowUp(element) {
-    keyDown(element, {
-        which: 38
-    });
+function arrowUp(element, options) {
+    var defaultOptions = { which: 38 };
+    options = $.extend(defaultOptions, options);
+    keyDown(element, options);
 }
 
-function space(element) {
-    keyDown(element, {
-        which: 32
-    });
+function space(element, options) {
+    var defaultOptions = { which: 32 };
+    options = $.extend(defaultOptions, options);
+    keyDown(element, options);
 }
 
 beforeEach(function() {
