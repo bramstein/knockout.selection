@@ -242,6 +242,13 @@ describe('Selection', function () {
                 });
             });
 
+            it('deselected selected items with ctrl-click', function () {
+                click($('#item4'), { ctrlKey: true });
+                expect(element).to.have.selectionCount(2);
+                [2,7].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
+            });
 
             it('expands the selection with shift-click', function () {
                 click($('#item5'), { shiftKey: true });
