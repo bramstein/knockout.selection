@@ -50,11 +50,8 @@ beforeEach(function() {
         var $element = $(this.obj);
         var elementClasses = ($element.attr('class') || '').split(' ');
 
-        if (this.flags.not) {
-            expect(elementClasses).to.not.contain(expected);
-        } else {
-            expect(elementClasses).to.contain(expected);
-        }
+        this.obj = elementClasses;
+        this.contain(expected);
 
         return this;
     };
