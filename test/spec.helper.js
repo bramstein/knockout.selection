@@ -27,39 +27,31 @@ function keyDown(element, options) {
     element.trigger(e);
 }
 
-function arrowDown(element) {
-    keyDown(element, {
-        which: 40
-    });
+function arrowDown(element, options) {
+    var defaultOptions = { which: 40 };
+    options = $.extend(defaultOptions, options);
+    keyDown(element, options);
 }
 
-function arrowUp(element) {
-    keyDown(element, {
-        which: 38
-    });
+function arrowUp(element, options) {
+    var defaultOptions = { which: 38 };
+    options = $.extend(defaultOptions, options);
+    keyDown(element, options);
 }
 
-function space(element) {
-    keyDown(element, {
-        which: 32
-    });
+function space(element, options) {
+    var defaultOptions = { which: 32 };
+    options = $.extend(defaultOptions, options);
+    keyDown(element, options);
 }
 
 beforeEach(function() {
     expect.Assertion.prototype.cssClass = function (expected) {
         var $element = $(this.obj);
-        var elementClass = $element.attr("class");
+        var elementClasses = ($element.attr('class') || '').split(' ');
 
-        if (this.flags.not) {
-            if (elementClass) {
-                expect(elementClass).to.not.contain(expected);
-            }
-            expect($element.hasClass(expected)).to.not.be.ok();
-        } else {
-            expect(elementClass).to.not.be(undefined);
-            expect(elementClass).to.contain(expected);
-            expect($element.hasClass(expected)).to.be.ok();
-        }
+        this.obj = elementClasses;
+        this.contain(expected);
 
         return this;
     };
@@ -67,7 +59,10 @@ beforeEach(function() {
     expect.Assertion.prototype.selectionCount = function (expected) {
         var selectionCount = $('.selected', this.obj).length;
 
-        expect(selectionCount).to.be(expected);
+        this.assert(
+            selectionCount === expected, 
+            function(){ return 'expected list to have ' + expected + ' selected items but got '+selectionCount; },
+            function(){ return 'expected list to not have ' + expected + ' selected items but got '+selectionCount; });
         
         return this;
     };
