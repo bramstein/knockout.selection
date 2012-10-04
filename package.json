@@ -2,6 +2,9 @@
     "name": "knockout.selection",
     "version": "0.0.1",
     "author": "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com)",
+    "contributors": [
+      "Sune Sloth Simonsen <sune@we-knowhow.dk>"
+    ],
     "dependencies": {},
     "private": true,
     "scripts": {
