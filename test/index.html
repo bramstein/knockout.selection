@@ -36,6 +36,12 @@
           <li data-bind="attr: { id: id }, css: { selected: selected, focused: focused }"></li>
         </ul>
       </div>
+
+      <div id="single-with-defaults">
+        <ul data-bind="foreach: items, selection: selection" tabindex="-1">
+          <li data-bind="attr: { id: id }, css: { selected: selected }"></li>
+        </ul>
+      </div>
     </div>
 
     <script src="../vendor/expect.js"></script>

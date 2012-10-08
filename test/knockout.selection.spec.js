@@ -385,7 +385,23 @@ describe('Selection', function () {
             element = useTestElement('#missing-foreach');
             expect(function () {
                 ko.applyBindings(model, element);
-            }).to.throwException();
+            }).to.throwException(/used together with `foreach`/);
+        });
+
+        it('throws when data is not an observable array', function () {
+            element = useTestElement('#single');
+            model.selection = [];
+            expect(function () {
+                ko.applyBindings(model, element);
+            }).to.throwException(/a object containing a `data` `observableArray`/);
+        });
+
+        it('throws when binding value is not an observable array', function () {
+            element = useTestElement('#single-with-defaults');
+            model.selection = [];
+            expect(function () {
+                ko.applyBindings(model, element);
+            }).to.throwException(/a object containing a `data` `observableArray`/);
         });
     });
 });
