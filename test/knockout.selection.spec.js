@@ -356,6 +356,20 @@ describe('Selection', function () {
                     expect($('#item'+index)).to.have.cssClass('selected');
                 });
             });
+
+            it('removes the selection and selects next element on down-arrow', function () {
+                model.focusItem(3);
+                arrowDown($('ul', element));
+                expect(element).to.have.selectionCount(1);
+                expect($('#item4')).to.have.cssClass('selected');
+            });
+
+            it('removes the selection and selects previous element on up-arrow', function () {
+                model.focusItem(3);
+                arrowUp($('ul', element));
+                expect(element).to.have.selectionCount(1);
+                expect($('#item2')).to.have.cssClass('selected');
+            });
         });
     });
 });
