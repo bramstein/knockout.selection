@@ -18,9 +18,23 @@ describe('Selection', function () {
             items: ko.observableArray(createItems(10)),
             selection: ko.observableArray(),
             focus: ko.observable(),
+            anchor: ko.observable(),
+            getItem: function (index) {
+                return this.items()[index];
+            },
             focusItem: function (index) {
-                var item = this.items()[index];
-                this.focus(item);
+                this.focus(this.getItem(index));
+            },
+            anchorItem: function (index) {
+                this.anchor(this.getItem(index));
+            },
+            select: function () {
+                var that = this;
+                var indexes = toArray(arguments);
+                var newSelection = indexes.map(function (index) {
+                    return that.items()[index];
+                });
+                that.selection(newSelection);
             }
         };
     });
@@ -89,7 +103,8 @@ describe('Selection', function () {
 
         describe('with one selected item', function () {
             beforeEach(function () {
-                click($('#item7'));
+                model.select(7);
+                model.focusItem(7);
             });
 
             it('has one selection', function () {
@@ -191,16 +206,23 @@ describe('Selection', function () {
                 expect(element).to.have.selectionCount(1);
             });
 
-            it('selects the focused and element after the focused element on shift-down-arrow'/*, function () {
-                // Seems to reproduce a bug in the selection model
+            it('selects and focuses the element after the focused element on shift-down-arrow', function () {
                 model.focusItem(3);
+                model.anchorItem(3);
                 arrowDown($('ul', element), { shiftKey: true });
                 expect($('#item3')).to.have.cssClass('selected');
                 expect($('#item4')).to.have.cssClass('selected');
-                expect(element).to.have.selectionCount(1);
-            }*/);
+                expect(element).to.have.selectionCount(2);
+            });
 
-            it('selects the focused and element before the focused element on shift-up-arrow');
+            it('selects and focuses the element before the focused element on shift-up-arrow', function () {
+                model.focusItem(3);
+                model.anchorItem(3);
+                arrowUp($('ul', element), { shiftKey: true });
+                expect($('#item3')).to.have.cssClass('selected');
+                expect($('#item2')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(2);
+            });
 
             describe('when first element is focused', function () {
                 beforeEach(function () {
@@ -229,9 +251,9 @@ describe('Selection', function () {
 
         describe('with selected items', function () {
             beforeEach(function () {
-                click($('#item7'));
-                click($('#item4'), { ctrlKey: true });
-                click($('#item2'), { ctrlKey: true });
+                model.select(7, 4, 2);
+                model.focusItem(2);
+                model.anchorItem(2);
             });
 
             it('expands the selection with ctrl-click', function () {

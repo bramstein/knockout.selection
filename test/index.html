@@ -18,7 +18,7 @@
       </div>
 
       <div id="multi">
-        <ul data-bind="foreach: items, selection: { data: selection, focus: focus }" tabindex="-1">
+        <ul data-bind="foreach: items, selection: { data: selection, focus: focus, anchor: anchor }" tabindex="-1">
           <li data-bind="attr: { id: id }, css: { selected: selected, focused: focused }"></li>
         </ul>
       </div>

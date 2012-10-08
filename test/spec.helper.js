@@ -45,6 +45,9 @@ function space(element, options) {
     keyDown(element, options);
 }
 
+function toArray(args) {
+    return Array.prototype.slice.call(args);
+}
 beforeEach(function() {
     expect.Assertion.prototype.cssClass = function (expected) {
         var $element = $(this.obj);
