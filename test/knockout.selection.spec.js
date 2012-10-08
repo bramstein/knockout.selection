@@ -66,7 +66,7 @@ describe('Selection', function () {
                 beforeEach(function () {
                     model.focusItem(0);
                 });
-                
+
                 it('selects the focused element on up-arrow', function () {
                     arrowUp($('ul', element));
                     expect($('#item0')).to.have.cssClass('selected');
@@ -78,7 +78,7 @@ describe('Selection', function () {
                 beforeEach(function () {
                     model.focusItem(9);
                 });
-                
+
                 it('selects the focused element on down-arrow', function () {
                     arrowDown($('ul', element));
                     expect($('#item9')).to.have.cssClass('selected');
@@ -130,20 +130,20 @@ describe('Selection', function () {
                 expect($('#item7')).to.not.have.cssClass('selected');
                 expect($('#item8')).to.have.cssClass('selected');
                 expect(element).to.have.selectionCount(1);
-            }); 
-            
+            });
+
             it('selects previous element on up-arrow', function () {
                 arrowUp($('ul', element));
                 expect($('#item7')).to.not.have.cssClass('selected');
                 expect($('#item6')).to.have.cssClass('selected');
                 expect(element).to.have.selectionCount(1);
-            }); 
+            });
 
             it('deselects item on space', function () {
                 space($('ul', element));
                 expect($('#item7')).to.not.have.cssClass('selected');
                 expect(element).to.have.selectionCount(0);
-            }); 
+            });
         });
 
         it('focuses selected element', function () {
@@ -206,7 +206,7 @@ describe('Selection', function () {
                 beforeEach(function () {
                     model.focusItem(0);
                 });
-                
+
                 it('selects the focused element on up-arrow', function () {
                     arrowUp($('ul', element));
                     expect($('#item0')).to.have.cssClass('selected');
@@ -218,7 +218,7 @@ describe('Selection', function () {
                 beforeEach(function () {
                     model.focusItem(9);
                 });
-                
+
                 it('selects the focused element on down-arrow', function () {
                     arrowDown($('ul', element));
                     expect($('#item9')).to.have.cssClass('selected');
