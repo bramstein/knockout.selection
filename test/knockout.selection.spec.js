@@ -370,6 +370,13 @@ describe('Selection', function () {
                 expect(element).to.have.selectionCount(1);
                 expect($('#item2')).to.have.cssClass('selected');
             });
+
+            it('removes the selection and selects clicked item on mouse click', function () {
+                model.focusItem(3);
+                click($('#item8'));
+                expect(element).to.have.selectionCount(1);
+                expect($('#item8')).to.have.cssClass('selected');
+            });
         });
     });
 });
