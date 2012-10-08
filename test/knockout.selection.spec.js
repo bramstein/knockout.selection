@@ -395,6 +395,26 @@ describe('Selection', function () {
             expect(element).to.have.selectionCount(0);
             expect($('#item4')).to.have.cssClass('focused');
         });
+
+        it('updates selected field of items when the selection data is changed', function () {
+            model.selection([2,3,4,7].map(function (index) {
+                return model.items()[index];
+            }));
+
+            var selectionCount = model.items().reduce(function (result, item) {
+                return result + item.selected();
+            }, 0);
+            expect(selectionCount).to.be(4);
+        });
+
+        it('updates focused field of the items when the focus changes', function () {
+            model.focus(model.items()[4]);
+            var focusCount = model.items().reduce(function (result, item) {
+                return result + item.focused();
+            }, 0);
+            expect(focusCount).to.be(1);
+            expect(model.items()[4].focused()).to.be.ok();
+        });
     });
 
     describe('error handling', function () {
