@@ -378,6 +378,23 @@ describe('Selection', function () {
                 expect($('#item8')).to.have.cssClass('selected');
             });
         });
+
+        it('updates the DOM when the selection data is changed', function () {
+            model.selection([2,3,4,7].map(function (index) {
+                return model.items()[index];
+            }));
+
+            expect(element).to.have.selectionCount(4);
+            [2,3,4,7].forEach(function (index) {
+                expect($('#item'+index)).to.have.cssClass('selected');
+            });
+        });
+
+        it('updates the DOM when the focus changes', function () {
+            model.focus(model.items()[4]);
+            expect(element).to.have.selectionCount(0);
+            expect($('#item4')).to.have.cssClass('focused');
+        });
     });
 
     describe('error handling', function () {
