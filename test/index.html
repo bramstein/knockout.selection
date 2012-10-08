@@ -6,7 +6,6 @@
   </head>
   <body>
     <div id="mocha"></div>
-    
 
     <div style="display: none" id="test"></div>
 
@@ -31,6 +30,12 @@
       <script type="text/html" id="items-template">
         <li data-bind="attr: { id: id }, css: { selected: selected, focused: focused }"></li>
       </script>
+
+      <div id="missing-foreach">
+        <ul data-bind="selection: { data: selection, focus: focus }" tabindex="-1">
+          <li data-bind="attr: { id: id }, css: { selected: selected, focused: focused }"></li>
+        </ul>
+      </div>
     </div>
 
     <script src="../vendor/expect.js"></script>

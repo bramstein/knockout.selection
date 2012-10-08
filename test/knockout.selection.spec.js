@@ -379,4 +379,13 @@ describe('Selection', function () {
             });
         });
     });
+
+    describe('error handling', function () {
+        it('throws if the selection-binding is not used together with a foreach-binding or a template-binding', function () {
+            element = useTestElement('#missing-foreach');
+            expect(function () {
+                ko.applyBindings(model, element);
+            }).to.throwException();
+        });
+    });
 });
