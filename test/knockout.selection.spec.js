@@ -183,6 +183,19 @@ describe('Selection', function () {
             it('selects the clicked element', function () {
                 click($('#item3'));
                 expect(element).to.have.selectionCount(1);
+                expect($('#item3')).to.have.cssClass('selected');
+            });
+
+            it('selects the clicked element on shift-click', function () {
+                click($('#item3'), { shiftKey: true });
+                expect(element).to.have.selectionCount(1);
+                expect($('#item3')).to.have.cssClass('selected');
+            });
+
+            it('selects the clicked element on ctrl-click', function () {
+                click($('#item3'), { ctrlKey: true });
+                expect(element).to.have.selectionCount(1);
+                expect($('#item3')).to.have.cssClass('selected');
             });
 
             it('select focused element on space', function () {
