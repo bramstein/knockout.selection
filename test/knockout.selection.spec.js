@@ -18,9 +18,23 @@ describe('Selection', function () {
             items: ko.observableArray(createItems(10)),
             selection: ko.observableArray(),
             focus: ko.observable(),
+            anchor: ko.observable(),
+            getItem: function (index) {
+                return this.items()[index];
+            },
             focusItem: function (index) {
-                var item = this.items()[index];
-                this.focus(item);
+                this.focus(this.getItem(index));
+            },
+            anchorItem: function (index) {
+                this.anchor(this.getItem(index));
+            },
+            select: function () {
+                var that = this;
+                var indexes = toArray(arguments);
+                var newSelection = indexes.map(function (index) {
+                    return that.items()[index];
+                });
+                that.selection(newSelection);
             }
         };
     });
@@ -66,7 +80,7 @@ describe('Selection', function () {
                 beforeEach(function () {
                     model.focusItem(0);
                 });
-                
+
                 it('selects the focused element on up-arrow', function () {
                     arrowUp($('ul', element));
                     expect($('#item0')).to.have.cssClass('selected');
@@ -78,7 +92,7 @@ describe('Selection', function () {
                 beforeEach(function () {
                     model.focusItem(9);
                 });
-                
+
                 it('selects the focused element on down-arrow', function () {
                     arrowDown($('ul', element));
                     expect($('#item9')).to.have.cssClass('selected');
@@ -89,7 +103,8 @@ describe('Selection', function () {
 
         describe('with one selected item', function () {
             beforeEach(function () {
-                click($('#item7'));
+                model.select(7);
+                model.focusItem(7);
             });
 
             it('has one selection', function () {
@@ -130,20 +145,20 @@ describe('Selection', function () {
                 expect($('#item7')).to.not.have.cssClass('selected');
                 expect($('#item8')).to.have.cssClass('selected');
                 expect(element).to.have.selectionCount(1);
-            }); 
-            
+            });
+
             it('selects previous element on up-arrow', function () {
                 arrowUp($('ul', element));
                 expect($('#item7')).to.not.have.cssClass('selected');
                 expect($('#item6')).to.have.cssClass('selected');
                 expect(element).to.have.selectionCount(1);
-            }); 
+            });
 
             it('deselects item on space', function () {
                 space($('ul', element));
                 expect($('#item7')).to.not.have.cssClass('selected');
                 expect(element).to.have.selectionCount(0);
-            }); 
+            });
         });
 
         it('focuses selected element', function () {
@@ -191,22 +206,29 @@ describe('Selection', function () {
                 expect(element).to.have.selectionCount(1);
             });
 
-            it('selects the focused and element after the focused element on shift-down-arrow'/*, function () {
-                // Seems to reproduce a bug in the selection model
+            it('selects and focuses the element after the focused element on shift-down-arrow', function () {
                 model.focusItem(3);
+                model.anchorItem(3);
                 arrowDown($('ul', element), { shiftKey: true });
                 expect($('#item3')).to.have.cssClass('selected');
                 expect($('#item4')).to.have.cssClass('selected');
-                expect(element).to.have.selectionCount(1);
-            }*/);
+                expect(element).to.have.selectionCount(2);
+            });
 
-            it('selects the focused and element before the focused element on shift-up-arrow');
+            it('selects and focuses the element before the focused element on shift-up-arrow', function () {
+                model.focusItem(3);
+                model.anchorItem(3);
+                arrowUp($('ul', element), { shiftKey: true });
+                expect($('#item3')).to.have.cssClass('selected');
+                expect($('#item2')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(2);
+            });
 
             describe('when first element is focused', function () {
                 beforeEach(function () {
                     model.focusItem(0);
                 });
-                
+
                 it('selects the focused element on up-arrow', function () {
                     arrowUp($('ul', element));
                     expect($('#item0')).to.have.cssClass('selected');
@@ -218,7 +240,7 @@ describe('Selection', function () {
                 beforeEach(function () {
                     model.focusItem(9);
                 });
-                
+
                 it('selects the focused element on down-arrow', function () {
                     arrowDown($('ul', element));
                     expect($('#item9')).to.have.cssClass('selected');
@@ -229,9 +251,9 @@ describe('Selection', function () {
 
         describe('with selected items', function () {
             beforeEach(function () {
-                click($('#item7'));
-                click($('#item4'), { ctrlKey: true });
-                click($('#item2'), { ctrlKey: true });
+                model.select(7, 4, 2);
+                model.focusItem(2);
+                model.anchorItem(2);
             });
 
             it('expands the selection with ctrl-click', function () {
@@ -347,40 +369,6 @@ describe('Selection', function () {
                 });
             });
 
-            it('expands the selection downward on ctrl-down-arrow', function () {
-                arrowDown($('ul', element), { ctrlKey: true });
-                expect(element).to.have.selectionCount(4);
-                [2,3,4,7].forEach(function (index) {
-                    expect($('#item'+index)).to.have.cssClass('selected');
-                });
-            });
-
-            it('expands the selection further downward on successive ctrl-down-arrow', function () {
-                arrowDown($('ul', element), { ctrlKey: true });
-                arrowDown($('ul', element), { ctrlKey: true });
-                expect(element).to.have.selectionCount(4);
-                [2,3,4,7].forEach(function (index) {
-                    expect($('#item'+index)).to.have.cssClass('selected');
-                });
-            });
-
-            it('expands the selection upward on ctrl-up-arrow', function () {
-                arrowUp($('ul', element), { ctrlKey: true });
-                expect(element).to.have.selectionCount(4);
-                [1,2,4,7].forEach(function (index) {
-                    expect($('#item'+index)).to.have.cssClass('selected');
-                });
-            });
-
-            it('expands the selection further upward on successive ctrl-up-arrow', function () {
-                arrowUp($('ul', element), { ctrlKey: true });
-                arrowUp($('ul', element), { ctrlKey: true });
-                expect(element).to.have.selectionCount(5);
-                [0,1,2,4,7].forEach(function (index) {
-                    expect($('#item'+index)).to.have.cssClass('selected');
-                });
-            });
-
             it('expands selection on successive ctrl-up/down-arrow', function () {
                 arrowDown($('ul', element), { ctrlKey: true });
                 arrowDown($('ul', element), { ctrlKey: true });
@@ -390,6 +378,89 @@ describe('Selection', function () {
                     expect($('#item'+index)).to.have.cssClass('selected');
                 });
             });
+
+            it('removes the selection and selects next element on down-arrow', function () {
+                model.focusItem(3);
+                arrowDown($('ul', element));
+                expect(element).to.have.selectionCount(1);
+                expect($('#item4')).to.have.cssClass('selected');
+            });
+
+            it('removes the selection and selects previous element on up-arrow', function () {
+                model.focusItem(3);
+                arrowUp($('ul', element));
+                expect(element).to.have.selectionCount(1);
+                expect($('#item2')).to.have.cssClass('selected');
+            });
+
+            it('removes the selection and selects clicked item on mouse click', function () {
+                model.focusItem(3);
+                click($('#item8'));
+                expect(element).to.have.selectionCount(1);
+                expect($('#item8')).to.have.cssClass('selected');
+            });
+        });
+
+        it('updates the DOM when the selection data is changed', function () {
+            model.selection([2,3,4,7].map(function (index) {
+                return model.items()[index];
+            }));
+
+            expect(element).to.have.selectionCount(4);
+            [2,3,4,7].forEach(function (index) {
+                expect($('#item'+index)).to.have.cssClass('selected');
+            });
+        });
+
+        it('updates the DOM when the focus changes', function () {
+            model.focus(model.items()[4]);
+            expect(element).to.have.selectionCount(0);
+            expect($('#item4')).to.have.cssClass('focused');
+        });
+
+        it('updates selected field of items when the selection data is changed', function () {
+            model.selection([2,3,4,7].map(function (index) {
+                return model.items()[index];
+            }));
+
+            var selectionCount = model.items().reduce(function (result, item) {
+                return result + item.selected();
+            }, 0);
+            expect(selectionCount).to.be(4);
+        });
+
+        it('updates focused field of the items when the focus changes', function () {
+            model.focus(model.items()[4]);
+            var focusCount = model.items().reduce(function (result, item) {
+                return result + item.focused();
+            }, 0);
+            expect(focusCount).to.be(1);
+            expect(model.items()[4].focused()).to.be.ok();
+        });
+    });
+
+    describe('error handling', function () {
+        it('throws if the selection-binding is not used together with a foreach-binding or a template-binding', function () {
+            element = useTestElement('#missing-foreach');
+            expect(function () {
+                ko.applyBindings(model, element);
+            }).to.throwException(/used together with `foreach`/);
+        });
+
+        it('throws when data is not an observable array', function () {
+            element = useTestElement('#single');
+            model.selection = [];
+            expect(function () {
+                ko.applyBindings(model, element);
+            }).to.throwException(/a object containing a `data` `observableArray`/);
+        });
+
+        it('throws when binding value is not an observable array', function () {
+            element = useTestElement('#single-with-defaults');
+            model.selection = [];
+            expect(function () {
+                ko.applyBindings(model, element);
+            }).to.throwException(/a object containing a `data` `observableArray`/);
         });
     });
 });
