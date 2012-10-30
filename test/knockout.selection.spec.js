@@ -237,6 +237,11 @@ describe('Selection', function () {
                 expect(element).to.have.selectionCount(2);
             });
 
+            it('selects everything on ctrl-a', function () {
+                keyDown($('ul', element), { ctrlKey: true, which: 65 });
+                expect(element).to.have.selectionCount(10);
+            });
+
             describe('when first element is focused', function () {
                 beforeEach(function () {
                     model.focusItem(0);
