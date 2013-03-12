@@ -8,9 +8,11 @@
     "dependencies": {},
     "private": true,
     "scripts": {
-        "test": "phantomjs vendor/mocha-phantomjs.coffee test/index.html"
+        "test": "mocha-phantomjs test/index.html"
     },
     "devDependencies": {
-        "phantomjs": "=0.0.8"
+        "phantomjs": "=0.0.8",
+        "mocha-phantomjs": "=2.0.1",
+        "expect.js": "=0.2.0"
     }
 }
