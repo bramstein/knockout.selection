@@ -48,7 +48,7 @@ function space(element, options) {
 function toArray(args) {
     return Array.prototype.slice.call(args);
 }
-beforeEach(function() {
+beforeEach(function () {
     expect.Assertion.prototype.cssClass = function (expected) {
         var $element = $(this.obj);
         var elementClasses = ($element.attr('class') || '').split(' ');
@@ -63,10 +63,10 @@ beforeEach(function() {
         var selectionCount = $('.selected', this.obj).length;
 
         this.assert(
-            selectionCount === expected, 
-            function(){ return 'expected list to have ' + expected + ' selected items but got '+selectionCount; },
-            function(){ return 'expected list to not have ' + expected + ' selected items but got '+selectionCount; });
-        
+            selectionCount === expected,
+            function () { return 'expected list to have ' + expected + ' selected items but got ' + selectionCount; },
+            function () { return 'expected list to not have ' + expected + ' selected items but got ' + selectionCount; });
+
         return this;
     };
 });

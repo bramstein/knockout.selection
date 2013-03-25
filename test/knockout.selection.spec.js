@@ -1,5 +1,5 @@
 function createItems(size) {
-    var result  = [];
+    var result = [];
 
     for (var i = 0; i < size; i += 1) {
         result.push({
