@@ -1,5 +1,5 @@
 function createItems(size) {
-    var result  = [];
+    var result = [];
 
     for (var i = 0; i < size; i += 1) {
         result.push({
@@ -158,6 +158,29 @@ describe('Selection', function () {
                 space($('ul', element));
                 expect($('#item7')).to.not.have.cssClass('selected');
                 expect(element).to.have.selectionCount(0);
+            });
+
+            it('keeps its selection and focused item after one of the unselected items is removed from the observable array', function () {
+                model.items.remove(model.getItem(6));
+                expect(model.focus()).to.be.ok();
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('has no selection after the selected item is removed from the observable array', function () {
+                model.items.remove(model.getItem(7));
+                expect(element).to.have.selectionCount(0);
+            });
+
+            it('has its focus observable set to null after the focused item is removed from the observable array', function () {
+                model.items.remove(model.getItem(7));
+                expect(model.focus()).to.not.be.ok();
+            });
+
+            it('has its anchor observable set to null after the anchor item is removed from the observable array', function () {
+                model.anchorItem(7);
+                expect(model.anchor()).to.be.ok();
+                model.items.remove(model.getItem(7));
+                expect(model.anchor()).to.not.be.ok();
             });
         });
 
@@ -416,6 +439,31 @@ describe('Selection', function () {
                 click($('#item8'));
                 expect(element).to.have.selectionCount(1);
                 expect($('#item8')).to.have.cssClass('selected');
+            });
+
+            it('keeps its selection count after one of the unselected items is removed from the observable array', function () {
+                model.items.remove(model.getItem(6));
+                expect(element).to.have.selectionCount(3);
+            });
+
+            it('has its selection count decremented after one of selected items is removed from the observable array', function () {
+                model.items.remove(model.getItem(7));
+                expect(element).to.have.selectionCount(2);
+            });
+
+            it('has its selection count decremented after the focused and selected item is removed from the observable array', function () {
+                model.items.remove(model.getItem(2));
+                expect(element).to.have.selectionCount(2);
+            });
+
+            it('has its focused observable set to null after the focused item is removed from the observable array', function () {
+                model.items.remove(model.getItem(2));
+                expect(model.focus()).to.not.be.ok();
+            });
+
+            it('has its anchor observable set to null after the anchor item is removed from the observable array', function () {
+                model.items.remove(model.getItem(2));
+                expect(model.anchor()).to.not.be.ok();
             });
         });
 
