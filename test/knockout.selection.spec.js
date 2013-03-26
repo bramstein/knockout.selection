@@ -37,6 +37,31 @@ describe('Selection', function () {
                 that.selection(newSelection);
             }
         };
+        model.itemsWrappedInAnObservable = ko.observable(model.items);
+    });
+
+    describe('with a dynamic observable array bound to foreach', function () {
+        beforeEach(function () {
+            element = useTestElement('#dynamicForeach');
+            ko.applyBindings(model, element);
+        });
+
+        describe('with a selection', function () {
+            beforeEach(function () {
+                model.select(7);
+                model.focusItem(7);
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('empties its selection when the observableArray bound to the foreach changes', function () {
+                model.items = ko.observableArray(createItems(9));
+                model.itemsWrappedInAnObservable(model.items);
+                expect(model.selection().length).to.be(0);
+                expect(element).to.have.selectionCount(0);
+                expect(model.focused()).to.not.be.ok();
+                expect(model.anchor()).to.not.be.ok();
+            });
+        });
     });
 
     describe('in single selection mode', function () {
@@ -164,14 +189,16 @@ describe('Selection', function () {
                 model.items.remove(model.getItem(6));
                 expect(model.focused()).to.be.ok();
                 expect(element).to.have.selectionCount(1);
+                expect(model.selection().length).to.be(1);
             });
 
             it('has no selection after the selected item is removed from the observable array', function () {
                 model.items.remove(model.getItem(7));
                 expect(element).to.have.selectionCount(0);
+                expect(model.selection().length).to.be(0);
             });
 
-            it('has its focus observable set to null after the focused item is removed from the observable array', function () {
+            it('has its focused observable set to null after the focused item is removed from the observable array', function () {
                 model.items.remove(model.getItem(7));
                 expect(model.focused()).to.not.be.ok();
             });
