@@ -42,3 +42,4 @@ posible to run the tests from the console using [PhantomJS](http://phantomjs.org
 
 * Sune Sloth Simonsen (@sunesimonsen)
 * Andreas Lind Petersen (@papandreou)
+* Maarten Winter (@mwoc)
