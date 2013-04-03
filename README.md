@@ -6,7 +6,7 @@ This binding implements a selection model that can be used with Knockout.js's `f
 
     data-bind="foreach: <observableArray>, selection: <observableArray>"
 
-    data-bind="foreach: <observableArray>, selection: { data: <observableArray>, focus: <observable> }"
+    data-bind="foreach: <observableArray>, selection: { data: <observableArray>, focused: <observable> }"
 
 ## Options
 
