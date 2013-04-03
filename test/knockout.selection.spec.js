@@ -17,13 +17,13 @@ describe('Selection', function () {
         model = {
             items: ko.observableArray(createItems(10)),
             selection: ko.observableArray(),
-            focus: ko.observable(),
+            focused: ko.observable(),
             anchor: ko.observable(),
             getItem: function (index) {
                 return this.items()[index];
             },
             focusItem: function (index) {
-                this.focus(this.getItem(index));
+                this.focused(this.getItem(index));
             },
             anchorItem: function (index) {
                 this.anchor(this.getItem(index));
@@ -162,7 +162,7 @@ describe('Selection', function () {
 
             it('keeps its selection and focused item after one of the unselected items is removed from the observable array', function () {
                 model.items.remove(model.getItem(6));
-                expect(model.focus()).to.be.ok();
+                expect(model.focused()).to.be.ok();
                 expect(element).to.have.selectionCount(1);
             });
 
@@ -173,7 +173,7 @@ describe('Selection', function () {
 
             it('has its focus observable set to null after the focused item is removed from the observable array', function () {
                 model.items.remove(model.getItem(7));
-                expect(model.focus()).to.not.be.ok();
+                expect(model.focused()).to.not.be.ok();
             });
 
             it('has its anchor observable set to null after the anchor item is removed from the observable array', function () {
@@ -186,9 +186,9 @@ describe('Selection', function () {
 
         it('focuses selected element', function () {
             click($('#item3'));
-            var focus = model.focus();
-            expect(focus.id).to.be('item3');
-            expect(focus.focused()).to.be.ok();
+            var focused = model.focused();
+            expect(focused.id).to.be('item3');
+            expect(focused.focused()).to.be.ok();
         });
     });
 
@@ -458,7 +458,7 @@ describe('Selection', function () {
 
             it('has its focused observable set to null after the focused item is removed from the observable array', function () {
                 model.items.remove(model.getItem(2));
-                expect(model.focus()).to.not.be.ok();
+                expect(model.focused()).to.not.be.ok();
             });
 
             it('has its anchor observable set to null after the anchor item is removed from the observable array', function () {
@@ -479,7 +479,7 @@ describe('Selection', function () {
         });
 
         it('updates the DOM when the focus changes', function () {
-            model.focus(model.items()[4]);
+            model.focused(model.items()[4]);
             expect(element).to.have.selectionCount(0);
             expect($('#item4')).to.have.cssClass('focused');
         });
@@ -496,7 +496,7 @@ describe('Selection', function () {
         });
 
         it('updates focused field of the items when the focus changes', function () {
-            model.focus(model.items()[4]);
+            model.focused(model.items()[4]);
             var focusCount = model.items().reduce(function (result, item) {
                 return result + item.focused();
             }, 0);

@@ -12,19 +12,19 @@
     <!-- Test elements -->
     <div style="display: none">
       <div id="single">
-        <ul data-bind="foreach: items, selection: { data: selection, single: true, focus: focus, anchor: anchor }" tabindex="-1">
+        <ul data-bind="foreach: items, selection: { data: selection, single: true, focused: focused, anchor: anchor }" tabindex="-1">
           <li data-bind="attr: { id: id }, css: { selected: selected }"></li>
         </ul>
       </div>
 
       <div id="multi">
-        <ul data-bind="foreach: items, selection: { data: selection, focus: focus, anchor: anchor }" tabindex="-1">
+        <ul data-bind="foreach: items, selection: { data: selection, focused: focused, anchor: anchor }" tabindex="-1">
           <li data-bind="attr: { id: id }, css: { selected: selected, focused: focused }"></li>
         </ul>
       </div>
 
       <div id="template">
-        <ul data-bind="template: { foreach: items, name: 'items-template' }, selection: { data: selection, focus: focus, anchor: anchor }" tabindex="-1"></ul>
+        <ul data-bind="template: { foreach: items, name: 'items-template' }, selection: { data: selection, focused: focused, anchor: anchor }" tabindex="-1"></ul>
       </div>
 
       <script type="text/html" id="items-template">
@@ -32,7 +32,7 @@
       </script>
 
       <div id="missing-foreach">
-        <ul data-bind="selection: { data: selection, focus: focus, anchor: anchor }" tabindex="-1">
+        <ul data-bind="selection: { data: selection, focused: focused, anchor: anchor }" tabindex="-1">
           <li data-bind="attr: { id: id }, css: { selected: selected, focused: focused }"></li>
         </ul>
       </div>
