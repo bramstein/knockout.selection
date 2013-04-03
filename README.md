@@ -14,7 +14,7 @@ This binding implements a selection model that can be used with Knockout.js's `f
 
 An observable array that will reflect the currently selected items from the `foreach` or `template: { foreach: ... }` bindings.
 
-### `focus` <observable>
+### `focused` <observable>
 
 An observable that contains the currently focused item. This might return `null` if there is no current focus.
 
