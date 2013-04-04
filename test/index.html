@@ -42,6 +42,12 @@
           <li data-bind="attr: { id: id }, css: { selected: selected }"></li>
         </ul>
       </div>
+
+      <div id="dynamicForeach">
+        <ul data-bind="foreach: itemsWrappedInAnObservable(), selection: { data: selection, single: true, focused: focused, anchor: anchor }" tabindex="-1">
+          <li data-bind="attr: { id: id }, css: { selected: selected }"></li>
+        </ul>
+      </div>
     </div>
 
     <script src="../vendor/expect.js"></script>
