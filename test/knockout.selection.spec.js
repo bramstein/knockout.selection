@@ -124,6 +124,24 @@ describe('Selection', function () {
                     expect(element).to.have.selectionCount(1);
                 });
             });
+
+            describe('when the selection is set manually', function () {
+
+                it('selects one item manually', function() {
+                    model.selection( [ model.items()[3] ] );
+
+                    expect($('#item3')).to.have.cssClass('selected');
+                    expect(element).to.have.selectionCount(1);
+                });
+
+                it('selects multiple items manually', function() {
+                    model.selection( [ model.items()[3], model.items()[9] ] );
+
+                    expect(element).to.have.selectionCount(1);
+                    expect($('#item9')).to.have.cssClass('selected');
+                });
+
+            });
         });
 
         describe('with one selected item', function () {
@@ -208,6 +226,24 @@ describe('Selection', function () {
                 expect(model.anchor()).to.be.ok();
                 model.items.remove(model.getItem(7));
                 expect(model.anchor()).to.not.be.ok();
+            });
+
+            describe('when the selection is set manually', function () {
+
+                it('selects one item manually', function() {
+                    model.selection( [ model.items()[3] ] );
+
+                    expect($('#item3')).to.have.cssClass('selected');
+                    expect(element).to.have.selectionCount(1);
+                });
+
+                it('selects multiple items manually', function() {
+                    model.selection( [ model.items()[3], model.items()[9] ] );
+
+                    expect(element).to.have.selectionCount(1);
+                    expect($('#item9')).to.have.cssClass('selected');
+                });
+
             });
         });
 
@@ -314,6 +350,25 @@ describe('Selection', function () {
                     expect($('#item9')).to.have.cssClass('selected');
                     expect(element).to.have.selectionCount(1);
                 });
+            });
+
+            describe('when the selection is set manually', function () {
+
+                it('selects one item manually', function() {
+                    model.selection( [ model.items()[3] ] );
+
+                    expect($('#item3')).to.have.cssClass('selected');
+                    expect(element).to.have.selectionCount(1);
+                });
+
+                it('selects multiple items manually', function() {
+                    model.selection( [ model.items()[3], model.items()[9] ] );
+
+                    expect(element).to.have.selectionCount(2);
+                    expect($('#item3')).to.have.cssClass('selected');
+                    expect($('#item9')).to.have.cssClass('selected');
+                });
+
             });
         });
 
@@ -530,6 +585,25 @@ describe('Selection', function () {
             it('has its anchor observable set to null after the anchor item is removed from the observable array', function () {
                 model.items.remove(model.getItem(2));
                 expect(model.anchor()).to.not.be.ok();
+            });
+
+            describe('when the selection is set manually', function () {
+
+                it('selects one item manually', function() {
+                    model.selection( [ model.items()[3] ] );
+
+                    expect($('#item3')).to.have.cssClass('selected');
+                    expect(element).to.have.selectionCount(1);
+                });
+
+                it('selects multiple items manually', function() {
+                    model.selection( [ model.items()[3], model.items()[9] ] );
+
+                    expect(element).to.have.selectionCount(2);
+                    expect($('#item3')).to.have.cssClass('selected');
+                    expect($('#item9')).to.have.cssClass('selected');
+                });
+
             });
         });
 
