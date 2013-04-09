@@ -395,6 +395,23 @@ describe('Selection', function () {
                 });
             });
 
+            it('expands the selection on space', function () {
+                model.focusItem(6);
+                space($('ul', element));
+                [2,4,6,7].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
+                expect(element).to.have.selectionCount(4);
+            });
+
+            it('maintains the selection of non-focused, but selected, elements on space', function () {
+                space($('ul', element));
+                [4,7].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
+                expect(element).to.have.selectionCount(2);
+            });
+
             it('expands the selection with shift-click', function () {
                 click($('#item5'), { shiftKey: true });
                 expect(element).to.have.selectionCount(4);
@@ -503,32 +520,21 @@ describe('Selection', function () {
 
             it('moves the selection anchor upward on ctrl-up-arrow', function () {
                 arrowUp($('ul', element), { ctrlKey: true });
-                space($('ul', element));
-                expect(element).to.have.selectionCount(1);
-                [1].forEach(function (index) {
-                    expect($('#item'+index)).to.have.cssClass('selected');
-                });
+
+                expect(model.anchor().id).to.be('item1');
             });
 
             it('moves the selection anchor further upward on successive ctrl-up-arrow', function () {
                 arrowUp($('ul', element), { ctrlKey: true });
                 arrowUp($('ul', element), { ctrlKey: true });
-                space($('ul', element));
-                expect(element).to.have.selectionCount(1);
-                [0].forEach(function (index) {
-                    expect($('#item'+index)).to.have.cssClass('selected');
-                });
+                expect(model.anchor().id).to.be('item0');
             });
 
             it('moves the selection anchor on successive ctrl-up/down-arrow', function () {
                 arrowDown($('ul', element), { ctrlKey: true });
                 arrowDown($('ul', element), { ctrlKey: true });
                 arrowUp($('ul', element), { ctrlKey: true });
-                space($('ul', element));
-                expect(element).to.have.selectionCount(1);
-                [3].forEach(function (index) {
-                    expect($('#item'+index)).to.have.cssClass('selected');
-                });
+                expect(model.anchor().id).to.be('item3');
             });
 
             it('maintains selection on successive ctrl-up/down-arrow', function () {
