@@ -245,6 +245,24 @@ describe('Selection', function () {
                 });
 
             });
+
+            describe('when the content of foreach is altered', function () {
+
+                it('keeps items selected when they are still in foreach', function () {
+                    model.items ( model.items().slice(5) );
+
+                    expect(element).to.have.selectionCount(1);
+                    expect($('#item7')).to.have.cssClass('selected');
+                    expect(model.selection().length).to.be(1);
+                });
+
+                it('removes items from selection when they are removed from foreach', function () {
+                    model.items ( model.items().slice(0,4) );
+
+                    expect(element).to.have.selectionCount(0);
+                    expect(model.selection().length).to.be(0);
+                });
+            });
         });
 
         it('focuses selected element', function () {
@@ -609,7 +627,27 @@ describe('Selection', function () {
                     expect($('#item3')).to.have.cssClass('selected');
                     expect($('#item9')).to.have.cssClass('selected');
                 });
+            });
 
+            describe('when the content of foreach is altered', function () {
+
+                it('keeps items selected when they are still in the foreach', function () {
+                    model.items ( model.items().slice(2,8) );
+
+                    expect(element).to.have.selectionCount(3);
+                    [2,4,7].forEach(function (index) {
+                        expect($('#item'+index)).to.have.cssClass('selected');
+                    });
+                    expect(model.selection().length).to.be(3);
+                });
+
+                it('removes items from selection when they are removed from foreach', function () {
+                    model.items ( model.items().slice(5) );
+
+                    expect(element).to.have.selectionCount(1);
+                    expect($('#item7')).to.have.cssClass('selected');
+                    expect(model.selection().length).to.be(1);
+                });
             });
         });
 
