@@ -8,6 +8,8 @@ This binding implements a selection model that can be used with Knockout.js's `f
 
     data-bind="foreach: <observableArray>, selection: { data: <observableArray>, focused: <observable> }"
 
+If you want to use the built-in keyboard navigation be sure to set `tabindex` so that your element can have focus and therefor receive keyboard events. See `examples/index.html` for an example on how to set `tabindex`.
+
 ## Options
 
 ### `data` <observableArray>
