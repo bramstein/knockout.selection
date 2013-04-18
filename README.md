@@ -45,3 +45,7 @@ posible to run the tests from the console using [PhantomJS](http://phantomjs.org
 * Sune Sloth Simonsen (@sunesimonsen)
 * Andreas Lind Petersen (@papandreou)
 * Maarten Winter (@mwoc)
+
+## License
+
+knockout.selection is licensed under the three clause BSD license.
