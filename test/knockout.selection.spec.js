@@ -101,6 +101,18 @@ describe('Selection', function () {
                 expect(element).to.have.selectionCount(1);
             });
 
+            it('selects first element on home', function () {
+                home($('ul', element));
+                expect($('#item0')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects last element on end', function () {
+                end($('ul', element));
+                expect($('#item9')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
             describe('when first element is focused', function () {
                 beforeEach(function () {
                     model.focusItem(0);
@@ -201,6 +213,18 @@ describe('Selection', function () {
                 space($('ul', element));
                 expect($('#item7')).to.not.have.cssClass('selected');
                 expect(element).to.have.selectionCount(0);
+            });
+
+            it('selects first element on home', function () {
+                home($('ul', element));
+                expect($('#item0')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects last element on end', function () {
+                end($('ul', element));
+                expect($('#item9')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
             });
 
             it('keeps its selection and focused item after one of the unselected items is removed from the observable array', function () {
@@ -306,6 +330,18 @@ describe('Selection', function () {
                 model.focusItem(3);
                 space($('ul', element));
                 expect($('#item3')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects first element on home', function () {
+                home($('ul', element));
+                expect($('#item0')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects last element on end', function () {
+                end($('ul', element));
+                expect($('#item9')).to.have.cssClass('selected');
                 expect(element).to.have.selectionCount(1);
             });
 
@@ -559,8 +595,67 @@ describe('Selection', function () {
                 arrowDown($('ul', element), { ctrlKey: true });
                 arrowDown($('ul', element), { ctrlKey: true });
                 arrowUp($('ul', element), { ctrlKey: true });
+
+                [2,4,7].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
+                expect(element).to.have.selectionCount(3);
+            });
+
+            it('selects all items from anchor to top on shift-home', function () {
+                home($('ul', element), { shiftKey: true });
+
+                expect(element).to.have.selectionCount(3);
+                [0,1,2].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('selects all items from anchor to bottom on shift-end', function () {
+                end($('ul', element), { shiftKey: true });
+
+                expect(element).to.have.selectionCount(8);
+                [2,3,4,5,6,7,8,9].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('moves the selection anchor to top on ctrl-home', function () {
+                home($('ul', element), { ctrlKey: true });
+                expect(model.anchor().id).to.be('item0');
+
                 expect(element).to.have.selectionCount(3);
                 [2,4,7].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('moves the selection anchor to bottom on ctrl-end', function () {
+                end($('ul', element), { ctrlKey: true });
+                expect(model.anchor().id).to.be('item9');
+
+                expect(element).to.have.selectionCount(3);
+                [2,4,7].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('expands selection with range from anchor to top on ctrl-shift-home', function () {
+                home($('ul', element), { ctrlKey:true, shiftKey: true });
+
+                expect(element).to.have.selectionCount(5);
+                [0,1,2,4,7].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('expands selection with range from anchor to bottom on ctrl-shift-end', function () {
+                model.focusItem(6);
+                model.anchorItem(6);
+                end($('ul', element), { ctrlKey: true, shiftKey: true });
+
+                expect(element).to.have.selectionCount(6);
+                [2,4,6,7,8,9].forEach(function (index) {
                     expect($('#item'+index)).to.have.cssClass('selected');
                 });
             });
