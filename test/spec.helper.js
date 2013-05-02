@@ -1,3 +1,4 @@
+/*global $, beforeEach, expect*/
 function useTestElement(selector) {
     var container = $('#test');
     container.empty();
