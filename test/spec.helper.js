@@ -13,8 +13,9 @@ function click(element, options) {
         ctrlKey: false
     };
     options = $.extend(defaultOptions, options);
-    var e = $.Event("mousedown", options);
-    element.trigger(e);
+    element.trigger($.Event("mousedown", options));
+    element.trigger($.Event("mouseup", options));
+    element.trigger($.Event("click", options));
 }
 
 function keyDown(element, options) {

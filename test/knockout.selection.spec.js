@@ -611,6 +611,23 @@ describe('Selection', function () {
                 expect(model.anchor()).to.not.be.ok();
             });
 
+            it('is possible to cancel the selection event if the item is alreay selected', function () {
+                $('#item4').one('mouseup', function (e) {
+                    e.stopPropagation();
+                });
+
+                var focused = model.focused();
+                var anchor = model.anchor();
+
+                click($('#item4'));
+                expect(focused).to.be(model.focused());
+                expect(anchor).to.be(model.anchor());
+                expect(element).to.have.selectionCount(3);
+                [2, 4, 7].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
+                });
+            });
+
             describe('when the selection is set manually', function () {
 
                 it('selects one item manually', function() {
