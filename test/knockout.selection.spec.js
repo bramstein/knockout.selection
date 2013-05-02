@@ -42,7 +42,7 @@ describe('Selection', function () {
         model.itemsWrappedInAnObservable = ko.observable(model.items);
     });
 
-    describe('with a dynamic observable array bound to foreach', function () {
+    describe.skip('with a dynamic observable array bound to foreach', function () {
         beforeEach(function () {
             element = useTestElement('#dynamicForeach');
             ko.applyBindings(model, element);
