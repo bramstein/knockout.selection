@@ -47,6 +47,18 @@ function space(element, options) {
     keyDown(element, options);
 }
 
+function home(element, options) {
+    var defaultOptions = { which: 36 };
+    options = $.extend(defaultOptions, options);
+    keyDown(element, options);
+}
+
+function end(element, options) {
+    var defaultOptions = { which: 35 };
+    options = $.extend(defaultOptions, options);
+    keyDown(element, options);
+}
+
 function toArray(args) {
     return Array.prototype.slice.call(args);
 }
