@@ -15,7 +15,7 @@ function createItems(size) {
 
 describe('Selection', function () {
     var model, element;
-    beforeEach(function () {
+    beforeEach(function (done) {
         model = {
             items: ko.observableArray(createItems(10)),
             selection: ko.observableArray(),
@@ -40,6 +40,10 @@ describe('Selection', function () {
             }
         };
         model.itemsWrappedInAnObservable = ko.observable(model.items);
+
+        // Use a setTimeout so IE8 doesn't run out of stack space (see
+        // https://github.com/visionmedia/mocha/issues/502)
+        setTimeout(done, 0);
     });
 
     describe.skip('with a dynamic observable array bound to foreach', function () {
