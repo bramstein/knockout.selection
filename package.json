@@ -12,12 +12,18 @@
     },
     "testling": {
       "browsers": [
-        "ie8",
-        "ie9",
-        "firefox/16",
-        "chrome/24",
-        "opera/12",
-        "safari/5.1"
+        "iexplore/8.0",
+        "iexplore/9.0",
+        "firefox/3.6",
+        "firefox/19.0",
+        "chrome/25",
+        "opera/12.0",
+        "opera/next",
+        "safari/5.1",
+        "safari/6.0",
+        "iphone/6.0",
+        "ipad/6.0",
+        "android-browser/4.2"
       ],
       "harness": "mocha",
       "html": "test/tap.html"
