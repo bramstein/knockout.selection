@@ -20,7 +20,7 @@
         "safari/5.1"
       ],
       "harness": "mocha",
-      "files": "test/*.spec.js"
+      "html": "test/tap.html"
     },
     "devDependencies": {
         "phantomjs": "=0.0.8",
