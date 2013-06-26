@@ -2,6 +2,8 @@
 
 This binding implements a selection model that can be used with Knockout.js's `foreach` and `template` bindings. It handles multiple selections using `<ctrl>`- and `<shift>`-click as well as keyboard navigation.
 
+[![browser support](http://ci.testling.com/bramstein/knockout.selection.png)](http://ci.testling.com/bramstein/knockout.selection)
+
 ## Usage
 
     data-bind="foreach: <observableArray>, selection: <observableArray>"
