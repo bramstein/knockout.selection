@@ -43,7 +43,9 @@ describe('Selection', function () {
 
         // Use a setTimeout so IE8 doesn't run out of stack space (see
         // https://github.com/visionmedia/mocha/issues/502)
-        setTimeout(done, 0);
+        setTimeout(function () {
+          done();
+        }, 0);
     });
 
     describe.skip('with a dynamic observable array bound to foreach', function () {
