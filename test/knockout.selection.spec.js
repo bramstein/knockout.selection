@@ -1,5 +1,5 @@
 /*global describe, it, expect, beforeEach, ko, $, toArray,
-         useTestElement, click, space, arrowDown, arrowUp, keyDown, keyUp*/
+         createTestElement, click, space, arrowDown, arrowUp, keyDown, keyUp*/
 function createItems(size) {
     var result = [];
 
@@ -44,7 +44,10 @@ describe('Selection', function () {
 
     describe.skip('with a dynamic observable array bound to foreach', function () {
         beforeEach(function () {
-            element = useTestElement('#dynamicForeach');
+            element = createTestElement(
+                'foreach: itemsWrappedInAnObservable(), selection: { data: selection, single: true, focused: focused, anchor: anchor }',
+                'attr: { id: id }, css: { selected: selected }'
+            );
             ko.applyBindings(model, element);
         });
 
@@ -68,7 +71,10 @@ describe('Selection', function () {
 
     describe('in single selection mode', function () {
         beforeEach(function () {
-            element = useTestElement('#single');
+            element = createTestElement(
+                'foreach: items, selection: { data: selection, single: true, focused: focused, anchor: anchor }',
+                'attr: { id: id }, css: { selected: selected }'
+            );
             ko.applyBindings(model, element);
         });
 
@@ -301,7 +307,10 @@ describe('Selection', function () {
 
     describe('in multiple selection mode', function () {
         beforeEach(function () {
-            element = useTestElement('#multi');
+            element = createTestElement(
+                'foreach: items, selection: { data: selection, focused: focused, anchor: anchor }',
+                'attr: { id: id }, css: { selected: selected, focused: focused }'
+            );
             ko.applyBindings(model, element);
         });
 
@@ -805,14 +814,20 @@ describe('Selection', function () {
 
     describe('error handling', function () {
         it('throws if the selection-binding is not used together with a foreach-binding or a template-binding', function () {
-            element = useTestElement('#missing-foreach');
+            element = createTestElement(
+                'selection: { data: selection, focused: focused, anchor: anchor }',
+                'attr: { id: id }, css: { selected: selected, focused: focused }'
+            );
             expect(function () {
                 ko.applyBindings(model, element);
             }).to.throwException(/used together with `foreach`/);
         });
 
         it('throws when data is not an observable array', function () {
-            element = useTestElement('#single');
+            element = createTestElement(
+                'foreach: items, selection: { data: selection, single: true, focused: focused, anchor: anchor }',
+                'attr: { id: id }, css: { selected: selected }'
+            );
             model.selection = [];
             expect(function () {
                 ko.applyBindings(model, element);
@@ -820,7 +835,10 @@ describe('Selection', function () {
         });
 
         it('throws when binding value is not an observable array', function () {
-            element = useTestElement('#single-with-defaults');
+            element = createTestElement(
+                'foreach: items, selection: selection',
+                'attr: { id: id }, css: { selected: selected }'
+            );
             model.selection = [];
             expect(function () {
                 ko.applyBindings(model, element);

@@ -1,10 +1,23 @@
 /*global $, beforeEach, expect*/
-function useTestElement(selector) {
-    var container = $('#test');
-    container.empty();
-    var testElement = $(selector).clone();
-    testElement.appendTo(container);
-    return testElement[0];
+function createTestElement(listBindings, itemBindings) {
+  var testContainer = $('#test'),
+      elementContainer = $('<div></div>'),
+      list = $('<ul tabindex="-1"></ul>');
+
+  list.attr('data-bind', listBindings);
+  elementContainer.append(list);
+
+  if (itemBindings) {
+      var item = $('<li></li>');
+
+      item.attr('data-bind', itemBindings);
+      list.append(item);
+  }
+
+  testContainer.empty();
+  testContainer.append(elementContainer);
+
+  return elementContainer.get(0);
 }
 
 function click(element, options) {
