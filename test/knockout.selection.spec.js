@@ -51,7 +51,7 @@ describe('Selection', function () {
     describe.skip('with a dynamic observable array bound to foreach', function () {
         beforeEach(function () {
             element = createTestElement(
-                'foreach: itemsWrappedInAnObservable(), selection: { data: selection, single: true, focused: focused, anchor: anchor }',
+                'foreach: itemsWrappedInAnObservable(), selection: { selection: selection, single: true, focused: focused, anchor: anchor }',
                 'attr: { id: id }, css: { selected: selected }'
             );
             ko.applyBindings(model, element);
@@ -78,7 +78,7 @@ describe('Selection', function () {
     describe('in single selection mode', function () {
         beforeEach(function () {
             element = createTestElement(
-                'foreach: items, selection: { data: selection, single: true, focused: focused, anchor: anchor }',
+                'foreach: items, selection: { selection: selection, single: true, focused: focused, anchor: anchor }',
                 'attr: { id: id }, css: { selected: selected }'
             );
             ko.applyBindings(model, element);
@@ -314,7 +314,7 @@ describe('Selection', function () {
     describe('in multiple selection mode', function () {
         beforeEach(function () {
             element = createTestElement(
-                'foreach: items, selection: { data: selection, focused: focused, anchor: anchor }',
+                'foreach: items, selection: { selection: selection, focused: focused, anchor: anchor }',
                 'attr: { id: id }, css: { selected: selected, focused: focused }'
             );
             ko.applyBindings(model, element);
@@ -821,7 +821,7 @@ describe('Selection', function () {
     describe('error handling', function () {
         it('throws if the selection-binding is not used together with a foreach-binding or a template-binding', function () {
             element = createTestElement(
-                'selection: { data: selection, focused: focused, anchor: anchor }',
+                'selection: { selection: selection, focused: focused, anchor: anchor }',
                 'attr: { id: id }, css: { selected: selected, focused: focused }'
             );
             expect(function () {
@@ -831,13 +831,13 @@ describe('Selection', function () {
 
         it('throws when data is not an observable array', function () {
             element = createTestElement(
-                'foreach: items, selection: { data: selection, single: true, focused: focused, anchor: anchor }',
+                'foreach: items, selection: { selection: selection, single: true, focused: focused, anchor: anchor }',
                 'attr: { id: id }, css: { selected: selected }'
             );
             model.selection = [];
             expect(function () {
                 ko.applyBindings(model, element);
-            }).to.throwException(/a object containing a `data` `observableArray`/);
+            }).to.throwException(/a object containing a `selection` `observableArray`/);
         });
 
         it('throws when binding value is not an observable array', function () {
@@ -848,7 +848,7 @@ describe('Selection', function () {
             model.selection = [];
             expect(function () {
                 ko.applyBindings(model, element);
-            }).to.throwException(/a object containing a `data` `observableArray`/);
+            }).to.throwException(/a object containing a `selection` `observableArray`/);
         });
     });
 });
