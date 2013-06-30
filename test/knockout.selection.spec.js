@@ -254,9 +254,17 @@ describe('Selection', function () {
                 expect(model.selection().length).to.be(0);
             });
 
-            it('has its focused observable set to null after the focused item is removed from the observable array', function () {
+            it('focuses the item at the same index after the focused item is removed from the observable array', function () {
                 model.items.remove(model.getItem(7));
-                expect(model.focused()).to.not.be.ok();
+                expect(model.focused()).to.be(model.getItem(7));
+                expect(model.focused().id).to.be('item8');
+            });
+
+            it('focuses the new last item if the last item was focused and removed from the observable array', function () {
+                model.focusItem(9);
+                model.items.remove(model.getItem(9));
+                expect(model.focused()).to.be(model.getItem(8));
+                expect(model.focused().id).to.be('item8');
             });
 
             it('has its anchor observable set to null after the anchor item is removed from the observable array', function () {
@@ -713,9 +721,17 @@ describe('Selection', function () {
                 expect(element).to.have.selectionCount(2);
             });
 
-            it('has its focused observable set to null after the focused item is removed from the observable array', function () {
+            it('focuses the item at the same index after the focused item is removed from the observable array', function () {
                 model.items.remove(model.getItem(2));
-                expect(model.focused()).to.not.be.ok();
+                expect(model.focused()).to.be(model.getItem(2));
+                expect(model.focused().id).to.be('item3');
+            });
+
+            it('focuses the new last item if the last item was focused and removed from the observable array', function () {
+                model.focusItem(9);
+                model.items.remove(model.getItem(9));
+                expect(model.focused()).to.be(model.getItem(8));
+                expect(model.focused().id).to.be('item8');
             });
 
             it('has its anchor observable set to null after the anchor item is removed from the observable array', function () {
