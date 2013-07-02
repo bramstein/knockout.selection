@@ -483,6 +483,24 @@ describe('Selection', function () {
                 expect(element).to.have.selectionCount(4);
             });
 
+            it('ignores ctrl key on space', function () {
+                model.focusItem(6);
+                space($('ul', element), { ctrlKey: true });
+                [2, 4, 6, 7].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
+                });
+                expect(element).to.have.selectionCount(4);
+            });
+
+            it('ignores shift key on space', function () {
+                model.focusItem(6);
+                space($('ul', element), { shiftKey: true });
+                [2, 4, 6, 7].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
+                });
+                expect(element).to.have.selectionCount(4);
+            });
+
             it('maintains the selection of non-focused, but selected, elements on space', function () {
                 space($('ul', element));
                 [4, 7].forEach(function (index) {
