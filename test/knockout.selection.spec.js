@@ -885,4 +885,20 @@ describe('Selection', function () {
             }).to.throwException(/a object containing a `selection` `observableArray`/);
         });
     });
+
+    it('handles nested scoping', function () {
+        element = createTestElement(
+            'foreach: items, selection: { selection: selection, single: true, focused: focused, anchor: anchor }',
+            'attr: { id: id }, css: { selected: selected }, foreach: [0, 1, 2]'
+        );
+
+        $('li', element).each(function (index, el) {
+            $(el).append('<span data-bind="text: $data"></span>');
+        });
+
+        ko.applyBindings(model, element);
+        click($('#item3 span:first-child'));
+        expect(element).to.have.selectionCount(1);
+        expect($('#item3')).to.have.cssClass('selected');
+    });
 });
