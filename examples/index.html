@@ -36,6 +36,18 @@
             </ul>
         </div>
 
+        <div class="multi-nested">
+            <h1>Multiple selections with nested scoping</h1>
+            <ul data-bind="foreach: items, selection: { selection: selection, focused: focused }" tabindex="-1">
+                <li data-bind="css: { selected: selected, focused: focused }">
+                    <span data-bind="text: text"></span>
+                    <ul data-bind="foreach: ['Sub-item 1', 'Sub-item 2', 'Sub-item 3']">
+                        <li data-bind="text: $data"></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
         <div class="template">
             <h1>Template selection</h1>
             <ul data-bind="template: { foreach: items, name: 'items-template' }, selection: selection" tabindex="-1"></ul>
@@ -83,6 +95,17 @@
                 };
 
             ko.applyBindings(multiSelection, window.document.querySelector('.multi'));
+
+            /**
+             * Allow multiple selections with a focused item and nested scopes.
+             */
+            var multiNestScopeSelection = {
+                    items: ko.observableArray(createItems(5)),
+                    selection: ko.observableArray(),
+                    focused: ko.observable()
+                };
+
+            ko.applyBindings(multiNestScopeSelection, window.document.querySelector('.multi-nested'));
 
             /**
              * Using a template is the same as others. To spice things up
