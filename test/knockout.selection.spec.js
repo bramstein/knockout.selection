@@ -853,26 +853,42 @@ describe('Selection', function () {
     });
 
     describe('when data is given as a argument', function () {
-        it('uses the given data as the basis for the selection instead of the foreach data', function () {
+        var items;
+        beforeEach(function () {
             element = createTestElement(
                 'foreach: items, selection: { data: allItems, selection: selection, focused: focused, anchor: anchor }',
                 'attr: { id: id }, css: { selected: selected, focused: focused }'
             );
 
-            var items = createItems(20);
+            items = createItems(20);
             model.allItems = ko.observableArray(items);
             model.items(items.slice(0, 10));
             ko.applyBindings(model, element);
+            model.selection([items[4], items[11], items[15]]);
+        });
 
-            model.selection([items[15]]);
+        it('can have selected elements outside the shown elements', function () {
+            expect(element).to.have.selectionCount(1);
+            expect($('#item4')).to.have.cssClass('selected');
+            expect(items[11].selected()).to.ok();
+            expect(items[15].selected()).to.ok();
+            expect(model.selection().length).to.be(3);
+        });
+
+        it('can update the visible selection by clicking', function () {
             click($('#item2'), { ctrlKey: true });
 
-            var selectionCount = model.allItems().reduce(function (result, item) {
-                return result + item.selected();
-            }, 0);
-            expect(selectionCount).to.be(2);
+            expect(element).to.have.selectionCount(2);
             expect($('#item2')).to.have.cssClass('selected');
-            expect($('#item15').length).to.be(0);
+            expect($('#item4')).to.have.cssClass('selected');
+            expect(items[11].selected()).to.ok();
+            expect(items[15].selected()).to.ok();
+            expect(model.selection().length).to.be(4);
+        });
+
+        it('selects everything on ctrl-a', function () {
+            keyDown($('ul', element), { ctrlKey: true, which: 65 });
+            expect(model.selection().length).to.be(20);
         });
     });
 
