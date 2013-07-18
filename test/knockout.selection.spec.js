@@ -852,6 +852,30 @@ describe('Selection', function () {
         });
     });
 
+    describe('when data is given as a argument', function () {
+        it('uses the given data as the basis for the selection instead of the foreach data', function () {
+            element = createTestElement(
+                'foreach: items, selection: { data: allItems, selection: selection, focused: focused, anchor: anchor }',
+                'attr: { id: id }, css: { selected: selected, focused: focused }'
+            );
+
+            var items = createItems(20);
+            model.allItems = ko.observableArray(items);
+            model.items(items.slice(0, 10));
+            ko.applyBindings(model, element);
+
+            model.selection([items[15]]);
+            click($('#item2'), { ctrlKey: true });
+
+            var selectionCount = model.allItems().reduce(function (result, item) {
+                return result + item.selected();
+            }, 0);
+            expect(selectionCount).to.be(2);
+            expect($('#item2')).to.have.cssClass('selected');
+            expect($('#item15').length).to.be(0);
+        });
+    });
+
     describe('error handling', function () {
         it('throws if the selection-binding is not used together with a foreach-binding or a template-binding', function () {
             element = createTestElement(
