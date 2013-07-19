@@ -4,6 +4,8 @@ This binding implements a selection model that can be used with Knockout.js's `f
 
 [![browser support](http://ci.testling.com/bramstein/knockout.selection.png)](http://ci.testling.com/bramstein/knockout.selection)
 
+[![Build Status](https://travis-ci.org/bramstein/knockout.selection.png?branch=master)](https://travis-ci.org/bramstein/knockout.selection)
+
 ## Usage
 
     data-bind="foreach: <observableArray>, selection: <observableArray>"
