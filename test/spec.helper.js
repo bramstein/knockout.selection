@@ -1,8 +1,12 @@
 /*global $, beforeEach, expect*/
-function createTestElement(listBindings, itemBindings) {
+function createTestElement(listBindings, itemBindings, parentBinding) {
   var testContainer = $('#test'),
       elementContainer = $('<div></div>'),
       list = $('<ul tabindex="-1"></ul>');
+
+  if (parentBinding) {
+      elementContainer.attr('data-bind', parentBinding);
+  }
 
   list.attr('data-bind', listBindings);
   elementContainer.append(list);
