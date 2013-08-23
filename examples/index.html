@@ -24,7 +24,7 @@
     <body>
         <div class="single">
             <h1>Single selection</h1>
-            <ul data-bind="foreach: items, selection: { selection: selection, single: true }" tabindex="-1">
+            <ul data-bind="foreach: items, selection: { selection: selection, mode: 'single' }" tabindex="-1">
                 <li data-bind="text: text, css: { selected: selected }"></li>
             </ul>
         </div>

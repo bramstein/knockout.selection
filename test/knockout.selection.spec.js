@@ -51,7 +51,7 @@ describe('Selection', function () {
     describe.skip('with a dynamic observable array bound to foreach', function () {
         beforeEach(function () {
             element = createTestElement(
-                'foreach: itemsWrappedInAnObservable(), selection: { selection: selection, single: true, focused: focused, anchor: anchor }',
+                "foreach: itemsWrappedInAnObservable(), selection: { selection: selection, mode: 'single', focused: focused, anchor: anchor }",
                 'attr: { id: id }, css: { selected: selected }'
             );
             ko.applyBindings(model, element);
@@ -78,7 +78,7 @@ describe('Selection', function () {
     describe('in single selection mode', function () {
         beforeEach(function () {
             element = createTestElement(
-                'foreach: items, selection: { selection: selection, single: true, focused: focused, anchor: anchor }',
+                "foreach: items, selection: { selection: selection, mode: 'single', focused: focused, anchor: anchor }",
                 'attr: { id: id }, css: { selected: selected }'
             );
             ko.applyBindings(model, element);
@@ -905,7 +905,7 @@ describe('Selection', function () {
 
         it('throws when data is not an observable array', function () {
             element = createTestElement(
-                'foreach: items, selection: { selection: selection, single: true, focused: focused, anchor: anchor }',
+                "foreach: items, selection: { selection: selection, mode: 'single', focused: focused, anchor: anchor }",
                 'attr: { id: id }, css: { selected: selected }'
             );
             model.selection = [];
@@ -928,7 +928,7 @@ describe('Selection', function () {
 
     it('handles nested scoping', function () {
         element = createTestElement(
-            'foreach: items, selection: { selection: selection, single: true, focused: focused, anchor: anchor }',
+            "foreach: items, selection: { selection: selection, mode: 'single', focused: focused, anchor: anchor }",
             'attr: { id: id }, css: { selected: selected }, foreach: [0, 1, 2]'
         );
 
@@ -940,5 +940,48 @@ describe('Selection', function () {
         click($('#item3 span:first-child'));
         expect(element).to.have.selectionCount(1);
         expect($('#item3')).to.have.cssClass('selected');
+    });
+
+    describe('when switching mode', function () {
+        var items;
+        beforeEach(function () {
+            element = createTestElement(
+                'foreach: items, selection: { selection: selection, focused: focused, anchor: anchor, mode: mode }',
+                'attr: { id: id }, css: { selected: selected, focused: focused }'
+            );
+
+            items = createItems(20);
+            model.items = ko.observableArray(items);
+            model.mode = ko.observable('multi');
+            ko.applyBindings(model, element);
+        });
+
+        it('switching to single mode, from multi with an active selection of 3 items should result in only the focused item being in the single mode selection.', function () {
+            model.mode('multi');
+            model.selection([items[4], items[11], items[15]]);
+            model.mode('single');
+
+            expect(model.selection().length).to.be(1);
+        });
+
+        it('verify that single mode works as expected when changing modes from multi mode.', function () {
+            model.mode('multi');
+            model.selection([items[4], items[11], items[15]]);
+            model.mode('single');
+
+            click($('#item2'), { ctrlKey: true });
+
+            expect(model.selection().length).to.be(1);
+        });
+
+        it('verify that multi mode works as expected when changing modes from single mode.', function () {
+            model.mode('single');
+            model.selection([items[0]]);
+            model.mode('multi');
+
+            click($('#item1'), { ctrlKey: true });
+
+            expect(model.selection().length).to.be(2);
+        });
     });
 });
