@@ -53,6 +53,14 @@
             <ul data-bind="template: { foreach: items, name: 'items-template' }, selection: selection" tabindex="-1"></ul>
         </div>
 
+        <div class="dynamic">
+            <h1>Switching selection mode on-the-fly</h1>
+            <select data-bind="options: modes, value: mode"></select>
+            <ul data-bind="foreach: items, selection: { selection: selection, mode: mode }" tabindex="-1">
+                <li data-bind="text: text, css: { selected: selected, focused: focused }"></li>
+            </ul>
+        </div>
+
         <script type="text/html" id="items-template">
             <li data-bind="text: text, css: { selected: selected, focused: focused }"></li>
         </script>
@@ -120,6 +128,22 @@
             templateSelection.selection([templateSelection.items()[4], templateSelection.items()[7]]);
 
             ko.applyBindings(templateSelection, window.document.querySelector('.template'));
+
+            /**
+             * Change selection modes on the fly
+             */
+            var dynamicSelection = {
+                    items: ko.observableArray(createItems(10)),
+                    selection: ko.observableArray(),
+                    mode: ko.observable('single'),
+                    modes: [
+                        'single',
+                        'multi'
+                    ]
+                };
+
+            ko.applyBindings(dynamicSelection, window.document.querySelector('.dynamic'));
+
         </script>
     </body>
 </html>
