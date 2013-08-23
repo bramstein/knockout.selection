@@ -924,6 +924,17 @@ describe('Selection', function () {
                 ko.applyBindings(model, element);
             }).to.throwException(/a object containing a `selection` `observableArray`/);
         });
+
+        it('throws when attempting to use an undefined selection mode', function () {
+            element = createTestElement(
+                "foreach: items, selection: { selection: selection, mode: 'nonExistingModeName' }",
+                'attr: { id: id }, css: { selected: selected }'
+            );
+            model.selection = ko.observableArray([]);
+            expect(function () {
+                ko.applyBindings(model, element);
+            }).to.throwException(/Unknown mode: "nonExistingModeName"/);
+        });
     });
 
     it('handles nested scoping', function () {
@@ -982,6 +993,12 @@ describe('Selection', function () {
             click($('#item1'), { ctrlKey: true });
 
             expect(model.selection().length).to.be(2);
+        });
+
+        it('switching to a non existing mode fails', function () {
+            expect(function () {
+                model.mode('nonExistingModeName');
+            }).to.throwException(/Unknown mode: "nonExistingModeName"/);
         });
     });
 });
