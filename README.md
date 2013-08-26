@@ -30,9 +30,9 @@ An observable array that will reflect the currently selected items from the `for
 
 An observable that contains the currently focused item. This might return `null` if there is no current focus.
 
-### `single` <boolean>
+### `mode` <string>
 
-Set to `true` if the selection model should only allow a single selected item. If set to `false` users can use `<ctrl>` and `<shift>` to select multiple items using either a mouse or keyboard. Defaults to `false`.
+Set to `single` if the selection model should only allow a single selected item. If set to `multi` users can use `<ctrl>` and `<shift>` to select multiple items using either a mouse or keyboard. Defaults to `multi`.
 
 ### `properties` <object>
 
