@@ -892,6 +892,39 @@ describe('Selection', function () {
         });
     });
 
+    describe('in conditional rendering mode', function () {
+        beforeEach(function () {
+            element = createTestElement(
+                'foreach: items, selection: { selection: selection, focused: focused, anchor: anchor }',
+                'attr: { id: id }, css: { selected: selected, focused: focused }',
+                'if: items().length > 5'
+            );
+            ko.applyBindings(model, element);
+        });
+
+        describe('with selected items', function () {
+            beforeEach(function () {
+                model.select(7, 4, 2);
+                model.focusItem(2);
+                model.anchorItem(2);
+            });
+
+            it('maintains focus, anchor and selection when dropping below the display threshold', function () {
+                model.items(model.items.slice(0,5));
+                expect(model.selection().length).to.be(2);
+                expect(model.focused()).to.be(model.items()[2]);
+                expect(model.anchor()).to.be(model.items()[2]);
+            });
+
+            it('cleans up focus, anchor and selection state when removing all items from the collection', function () {
+                model.items([0]);
+                expect(model.selection().length).to.be(0);
+                expect(model.focused()).to.not.be.ok();
+                expect(model.anchor()).to.not.be.ok();
+            });
+        });
+    });
+
     describe('error handling', function () {
         it('throws if the selection-binding is not used together with a foreach-binding or a template-binding', function () {
             element = createTestElement(
