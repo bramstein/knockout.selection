@@ -30,6 +30,12 @@
     "browser": "ie"
   },
   {
+    "os_version": "Snow Leopard",
+    "os": "OS X",
+    "browser_version": "5.0",
+    "browser": "safari"
+  },
+  {
     "os_version": "Mountain Lion",
     "os": "OS X",
     "browser_version": "6.0",
