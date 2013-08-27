@@ -1,0 +1,15 @@
+{
+    "name": "knockout.selection",
+    "main": "lib/knockout.selection.js",
+    "ignore": [
+        "examples",
+        "test",
+        "vendor",
+        "browsers.json",
+        "Gruntfile.js",
+        ".*"
+    ],
+    "dependencies": {
+        "knockout": ">=2.1.0"
+    }
+}
