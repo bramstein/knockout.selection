@@ -36,6 +36,13 @@
             </ul>
         </div>
 
+        <div class="off">
+            <h1>Selection off</h1>
+            <ul data-bind="foreach: items, selection: { selection: selection, mode: 'off' }" tabindex="-1">
+                <li data-bind="text: text, css: { selected: selected, focused: focused }"></li>
+            </ul>
+        </div>
+
         <div class="multi">
             <h1>Multiple selections</h1>
             <ul data-bind="foreach: items, selection: { selection: selection, focused: focused }" tabindex="-1">
@@ -112,6 +119,16 @@
             ko.applyBindings(toggleSelection, window.document.querySelector('.toggle'));
 
             /**
+             * Create an off selection model that does not allow selecting items.
+             */
+            var offSelection = {
+                    items: ko.observableArray(createItems(10)),
+                    selection: ko.observableArray()
+                };
+
+            ko.applyBindings(offSelection, window.document.querySelector('.off'));
+
+            /**
              * Allow multiple selections with a focused item.
              */
             var multiSelection = {
@@ -157,6 +174,7 @@
                     modes: [
                         'single',
                         'toggle',
+                        'off',
                         'multi'
                     ]
                 };

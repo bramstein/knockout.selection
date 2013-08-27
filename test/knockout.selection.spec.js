@@ -368,6 +368,54 @@ describe('Selection', function () {
         });
     });
 
+    describe('in off selection mode', function () {
+        beforeEach(function () {
+            element = createTestElement(
+                "foreach: items, selection: { selection: selection, mode: 'off', focused: focused, anchor: anchor }",
+                'attr: { id: id }, css: { selected: selected }'
+            );
+            ko.applyBindings(model, element);
+        });
+
+        describe('with no selection', function () {
+            it('has no elements marked as selected', function () {
+                expect(element).to.have.selectionCount(0);
+            });
+
+            it('does not select the clicked element', function () {
+                click($('#item3'));
+                expect(element).to.have.selectionCount(0);
+            });
+
+            it('does not select focused element on space', function () {
+                model.focusItem(3);
+                space($('ul', element));
+                expect(element).to.have.selectionCount(0);
+            });
+        });
+
+        describe('with one item selected', function () {
+            beforeEach(function () {
+                model.select(7);
+                model.focusItem(7);
+            });
+
+            it('should have one selected item', function () {
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('should not select another item', function () {
+                click($('#item3'));
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('should not deselect an item by selecting it', function () {
+                click($('#item7'));
+                expect(element).to.have.selectionCount(1);
+            });
+        });
+    });
+
     describe('in multiple selection mode', function () {
         beforeEach(function () {
             element = createTestElement(

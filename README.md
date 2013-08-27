@@ -32,7 +32,15 @@ An observable that contains the currently focused item. This might return `null`
 
 ### `mode` <string>
 
-Set to `single` if the selection model should only allow a single selected item. If set to `multi` users can use `<ctrl>` and `<shift>` to select multiple items using either a mouse or keyboard. When set to `toggle` the selection model supports multiple selections, but selections are "sticky". Once selected they can only be deselect by selecting them again. This is useful on, for example, touch devices. Defaults to `multi`.
+Set to `single` if the selection model should only allow a single selected item. 
+
+If set to `multi` users can use `<ctrl>` and `<shift>` to select multiple items using either a mouse or keyboard. 
+
+When set to `toggle` the selection model supports multiple selections, but selections are "sticky". Once selected they can only be deselect by selecting them again. This is useful on, for example, touch devices.
+
+Set to `off` to disable the selection.
+
+Defaults to `multi`.
 
 ### `properties` <object>
 
