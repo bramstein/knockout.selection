@@ -1,11 +1,11 @@
-script: grunt browsertest
-before_script: 
-- npm install -g grunt-cli browserstack-test
-language: node_js
-env: 
-  global: 
-  - secure: HzDQC47+AW8dnAeUh3pxBJxz7qbglGc9+fk415V55RmFChg2ukDf6vaa5zYYIp6MU21ModXkFjgl2aqfTAv8tdoSLsjFFsa9SDCUptMbsVzlucYFieKecjUuJ+QYWQ6SrI0vjqEhYxN/tm/NRMxi5oquRNZyOdZA0SS/9A124Qw=
-  - secure: jL0i/WMbtA8AQKr6tbdiHvNJykFcKFrgWK0BVEatjjOzL3wEanC+/jBmy9L7Dx55XnQp1AWomqCdNqZNRz2cIpwU3433nmqZqF4CS5WiZOUuHYYbF2XLUuxkNC+W0TCP/mnI3lkSf5Yfnl/GYVT126xegMqpKcv4LS/auutjPiA=
-  - secure: dUeFloFWeozRLcg6b5WfPY89PjZZEgw8HUF2eMBh9lekoHcH2CQaDrRNIbJ4aL6v+P8BsUBCoh9IARJ2OG8cC33GUxEpLoXsRCb7c7ElDuLLlr2xpSwngCg0JKNPQ1V9IZHxvEVhkzLgJkfHfmx20YhocbpL5OMrhdeh8ym9TFY=
 node_js: 
 - 0.1
+script: grunt browsertest
+env: 
+  global: 
+  - secure: ayI3z50DtCcnFZs1skoZtpaNy1CStgvtBeFd86Zg9srAhhHwGX5TiM3cOg4D2XCYSnd1Juo3tjbQT/t8b8ULbJr3zQQ0q6jvRAot21djxlc01PkQ7FdYb32kiRBkgCf3X/lwGs+uP6ArHm/6kSzXWV0u+deDWgNKfdTsyV4o/JI=
+  - secure: M5IcfTRM7k1NEXFcLIyVVwTT7pG3XDka08p9cVZJHV3tzi8n83WIX+4JCZvxi+EmMOCJOp7evKt3hcm16YFXp7F9LCkgpkW+NoeKdr5lHWfsYeiKkOuVe4xNSTwFyGKY/HEM9/vNlo86h0a4lRD1kr7SASzuoFegY0wyatu2RJk=
+  - secure: le8AKRAHC4BwSrVpLx2qojyHRWG0r2CH7VKNTlHkSkMioO2uDiG6A/UXBrEr6luA4GiKtzznyKfyC/U0Kv8uQ1dM56kX3MXOEOmschA54rhBsnypVONNsIwQgxfzGpHODsQot+VFsggx2+CI1BJfTEfJoMVS7GXS4Qyuj6NOQtU=
+language: node_js
+before_script: 
+- npm install -g grunt-cli browserstack-test
