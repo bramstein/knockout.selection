@@ -1,10 +1,6 @@
-## Knockout.js selection binding
+## Knockout.js selection binding [![Build Status](https://travis-ci.org/bramstein/knockout.selection.png?branch=master)](https://travis-ci.org/bramstein/knockout.selection)
 
 This binding implements a selection model that can be used with Knockout.js's `foreach` and `template` bindings, or other bindings through the `data` option. It handles multiple selections using `<ctrl>`- and `<shift>`-click as well as keyboard navigation.
-
-[![browser support](http://ci.testling.com/bramstein/knockout.selection.png)](http://ci.testling.com/bramstein/knockout.selection)
-
-[![Build Status](https://travis-ci.org/bramstein/knockout.selection.png?branch=master)](https://travis-ci.org/bramstein/knockout.selection)
 
 ## Usage
 
