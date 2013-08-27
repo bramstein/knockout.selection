@@ -12,7 +12,7 @@ module.exports = function (grunt) {
     watch: {},
     exec: {
       browserstacktest: {
-        command: 'browserstack-test -u $BROWSERSTACK_USERNAME -p $BROWSERSTACK_PASSWORD -k $BROWSERSTACK_KEY -b browsers.json http://localhost:9999/test/index.html'
+        command: 'browserstack-test -u $BROWSERSTACK_USERNAME -p $BROWSERSTACK_PASSWORD -k $BROWSERSTACK_KEY -b browsers.json -t 60 http://localhost:9999/test/index.html'
       }
     }
   });
