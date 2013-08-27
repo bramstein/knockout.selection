@@ -319,6 +319,55 @@ describe('Selection', function () {
         });
     });
 
+    describe('in toggle selection mode', function () {
+        beforeEach(function () {
+            element = createTestElement(
+                "foreach: items, selection: { selection: selection, mode: 'toggle', focused: focused, anchor: anchor }",
+                'attr: { id: id }, css: { selected: selected }'
+            );
+            ko.applyBindings(model, element);
+        });
+
+        describe('with no selection', function () {
+            it('has no elements marked as selected', function () {
+                expect(element).to.have.selectionCount(0);
+            });
+
+            it('selects the clicked element', function () {
+                click($('#item3'));
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('select focused element on space', function () {
+                model.focusItem(3);
+                space($('ul', element));
+                expect($('#item3')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+        });
+
+        describe('with one item selected', function () {
+            beforeEach(function () {
+                model.select(7);
+                model.focusItem(7);
+            });
+
+            it('should have one selected item', function () {
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects another item', function () {
+                click($('#item3'));
+                expect(element).to.have.selectionCount(2);
+            });
+
+            it('deselects an item by selecting it', function () {
+                click($('#item7'));
+                expect(element).to.have.selectionCount(0);
+            });
+        });
+    });
+
     describe('in multiple selection mode', function () {
         beforeEach(function () {
             element = createTestElement(
