@@ -54,6 +54,10 @@ This test suite uses [Mocha](http://visionmedia.github.com/mocha/) and
 You can run the tests in the browser by opening tests.html. It is also
 posible to run the tests from the console using [PhantomJS](http://phantomjs.org/), just run `npm test`.
 
+## Browser Support
+
+This project supports the latest Internet Explorer, Firefox, Opera, Chrome, Safari, and Android browsers. Tests are run automatically on [all supported browsers](browsers.json) using [BrowserStack](http://www.browserstack.com/) and [browserstack-test](https://github.com/bramstein/browserstack-test).
+
 ## Contributors
 
 * Sune Sloth Simonsen (@sunesimonsen)
