@@ -1032,18 +1032,21 @@ describe('Selection', function () {
     });
 
     describe('input data cleanup', function () {
-        it('cleans up the `selected` property on items that are not actually in the selection', function () {
+        it('removes items from selection on init when they do not exist in the data source', function () {
             element = createTestElement(
                 'foreach: items, selection: { selection: selection, focused: focused, anchor: anchor }',
                 'attr: { id: id }, css: { selected: selected, focused: focused }'
             );
-            model.items()[8].selected(true);
+
+            var extraItems = createItems(1);
+            extraItems[0].selected(true);
+            model.selection.push(extraItems[0]);
 
             ko.applyBindings(model, element);
             clock.tick(5);
 
             expect(model.selection().length).to.be(0);
-            expect($('#item8')).to.not.have.cssClass('selected');
+            expect(extraItems[0].selected()).to.be(false);
         });
     });
 
