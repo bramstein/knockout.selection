@@ -17,6 +17,7 @@ describe('Selection', function () {
     var clock;
     var model, element;
     beforeEach(function () {
+        clock = sinon.useFakeTimers();
         model = {
             items: ko.observableArray(createItems(10)),
             selection: ko.observableArray(),
@@ -44,6 +45,11 @@ describe('Selection', function () {
     });
 
     afterEach(function (done) {
+        clock.restore();
+
+        // Restore window.setTimeout as sinon.useFakeTimers overwrites it
+        window.setTimeout = clock._setTimeout;
+
         // Use a setTimeout so IE8 doesn't run out of stack space (see
         // https://github.com/visionmedia/mocha/issues/502)
         window.setTimeout(function () {
