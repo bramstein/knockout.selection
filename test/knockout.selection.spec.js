@@ -1031,6 +1031,22 @@ describe('Selection', function () {
         });
     });
 
+    describe('input data cleanup', function () {
+        it('cleans up the `selected` property on items that are not actually in the selection', function () {
+            element = createTestElement(
+                'foreach: items, selection: { selection: selection, focused: focused, anchor: anchor }',
+                'attr: { id: id }, css: { selected: selected, focused: focused }'
+            );
+            model.items()[8].selected(true);
+
+            ko.applyBindings(model, element);
+            clock.tick(5);
+
+            expect(model.selection().length).to.be(0);
+            expect($('#item8')).to.not.have.cssClass('selected');
+        });
+    });
+
     describe('error handling', function () {
         it('throws if the selection-binding is not used together with a foreach-binding or a template-binding', function () {
             element = createTestElement(
