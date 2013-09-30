@@ -14,8 +14,9 @@ function createItems(size) {
 }
 
 describe('Selection', function () {
+    var clock;
     var model, element;
-    beforeEach(function (done) {
+    beforeEach(function () {
         model = {
             items: ko.observableArray(createItems(10)),
             selection: ko.observableArray(),
@@ -40,10 +41,12 @@ describe('Selection', function () {
             }
         };
         model.itemsWrappedInAnObservable = ko.observable(model.items);
+    });
 
+    afterEach(function (done) {
         // Use a setTimeout so IE8 doesn't run out of stack space (see
         // https://github.com/visionmedia/mocha/issues/502)
-        setTimeout(function () {
+        window.setTimeout(function () {
           done();
         }, 0);
     });
