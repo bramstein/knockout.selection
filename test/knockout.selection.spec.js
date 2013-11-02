@@ -1032,7 +1032,7 @@ describe('Selection', function () {
     });
 
     describe('input data cleanup', function () {
-        it('removes items from selection on init when they do not exist in the data source', function () {
+        it('removes items from selection on init when they do not exist in the data source', function (done) {
             element = createTestElement(
                 'foreach: items, selection: { selection: selection, focused: focused, anchor: anchor }',
                 'attr: { id: id }, css: { selected: selected, focused: focused }'
@@ -1043,10 +1043,11 @@ describe('Selection', function () {
             model.selection.push(extraItems[0]);
 
             ko.applyBindings(model, element);
-            clock.tick(5);
-
-            expect(model.selection().length).to.be(0);
-            expect(extraItems[0].selected()).to.be(false);
+            setTimeout(function () {
+                expect(model.selection().length).to.be(0);
+                expect(extraItems[0].selected()).to.be(false);
+                done();
+            }, 5);
         });
     });
 
