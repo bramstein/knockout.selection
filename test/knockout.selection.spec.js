@@ -15,7 +15,7 @@ function createItems(size) {
 
 describe('Selection', function () {
     var model, element;
-    beforeEach(function (done) {
+    beforeEach(function () {
         model = {
             items: ko.observableArray(createItems(10)),
             selection: ko.observableArray(),
@@ -40,10 +40,12 @@ describe('Selection', function () {
             }
         };
         model.itemsWrappedInAnObservable = ko.observable(model.items);
+    });
 
+    afterEach(function (done) {
         // Use a setTimeout so IE8 doesn't run out of stack space (see
         // https://github.com/visionmedia/mocha/issues/502)
-        setTimeout(function () {
+        window.setTimeout(function () {
           done();
         }, 0);
     });
@@ -1019,6 +1021,26 @@ describe('Selection', function () {
                 expect(model.focused()).to.not.be.ok();
                 expect(model.anchor()).to.not.be.ok();
             });
+        });
+    });
+
+    describe('input data cleanup', function () {
+        it('removes items from selection on init when they do not exist in the data source', function (done) {
+            element = createTestElement(
+                'foreach: items, selection: { selection: selection, focused: focused, anchor: anchor }',
+                'attr: { id: id }, css: { selected: selected, focused: focused }'
+            );
+
+            var extraItems = createItems(1);
+            extraItems[0].selected(true);
+            model.selection.push(extraItems[0]);
+
+            ko.applyBindings(model, element);
+            setTimeout(function () {
+                expect(model.selection().length).to.be(0);
+                expect(extraItems[0].selected()).to.be(false);
+                done();
+            }, 5);
         });
     });
 
