@@ -10,6 +10,6 @@
         ".*"
     ],
     "dependencies": {
-        "knockout": ">=2.1.0"
+        "knockout": ">=2.2.1"
     }
 }
