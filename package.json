@@ -10,7 +10,7 @@
   ],
   "main": "lib/knockout.selection.js",
   "dependencies": {
-    "knockout": ">=2.2.1"
+    "knockout": ">=2.3.0"
   },
   "scripts": {
     "test": "mocha-phantomjs test/phantomjs.html"
