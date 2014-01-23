@@ -26,7 +26,7 @@ An observable array that will reflect the currently selected items from the `for
 
 An observable that contains the currently focused item. This might return `null` if there is no current focus.
 
-### `mode` \<string\>
+### `mode` \<observable\>
 
 Set to `single` if the selection model should only allow a single selected item.
 
@@ -37,6 +37,8 @@ When set to `toggle` the selection model supports multiple selections, but selec
 Set to `off` to disable the selection.
 
 Defaults to `multi`.
+
+The mode will be altered on the fly when the value of the observable changes.
 
 ### `direction` \<string\>
 
