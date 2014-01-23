@@ -29,6 +29,13 @@
             </ul>
         </div>
 
+        <div class="single-horizontal">
+            <h1>Single selection, horizontal</h1>
+            <div data-bind="foreach: items, selection: { selection: selection, mode: 'single', direction: 'horizontal' }" tabindex="-1">
+                <span data-bind="text: text, css: { selected: selected }"></span>
+            </div>
+        </div>
+
         <div class="toggle">
             <h1>Toggle selection</h1>
             <ul data-bind="foreach: items, selection: { selection: selection, mode: 'toggle' }" tabindex="-1">
@@ -60,6 +67,13 @@
                     </ul>
                 </li>
             </ul>
+        </div>
+
+        <div class="multi-horizontal">
+            <h1>Multiple selections, horizontal</h1>
+            <div data-bind="foreach: items, selection: { selection: selection, focused: focused, direction: 'horizontal' }" tabindex="-1">
+                <span data-bind="text: text, css: { selected: selected, focused: focused }"></span>
+            </div>
         </div>
 
         <div class="template">
@@ -115,6 +129,17 @@
             ko.applyBindings(singleSelection, window.document.querySelector('.single'));
 
             /**
+             * Create a simple selection model that only allows
+             * selecting a single item at a time.
+             */
+            var singleHorizontalSelection = {
+                    items: ko.observableArray(createItems(10)),
+                    selection: ko.observableArray()
+                };
+
+            ko.applyBindings(singleHorizontalSelection, window.document.querySelector('.single-horizontal'));
+
+            /**
              * Create a toggle selection model that allows selecting
              * multiple items by toggling them.
              */
@@ -145,6 +170,17 @@
                 };
 
             ko.applyBindings(multiSelection, window.document.querySelector('.multi'));
+
+            /**
+             * Allow multiple selections with a focused item.
+             */
+            var multiHorizontalSelection = {
+                    items: ko.observableArray(createItems(10)),
+                    selection: ko.observableArray(),
+                    focused: ko.observable()
+                };
+
+            ko.applyBindings(multiHorizontalSelection, window.document.querySelector('.multi-horizontal'));
 
             /**
              * Allow multiple selections with a focused item and nested scopes.
