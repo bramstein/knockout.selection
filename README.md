@@ -14,23 +14,23 @@ If you want to use the built-in keyboard navigation be sure to set `tabindex` so
 
 ## Options
 
-### `data` <observableArray>
+### `data` \<observableArray\>
 
 An observable array that contains all items available to the selection model, as an alternative to the `foreach` and `template: { foreach: ... }` bindings.
 
-### `selection` <observableArray>
+### `selection` \<observableArray\>
 
 An observable array that will reflect the currently selected items from the `foreach` or `template: { foreach: ... }` bindings, or from the `data` option.
 
-### `focused` <observable>
+### `focused` \<observable\>
 
 An observable that contains the currently focused item. This might return `null` if there is no current focus.
 
-### `mode` <string>
+### `mode` \<string\>
 
-Set to `single` if the selection model should only allow a single selected item. 
+Set to `single` if the selection model should only allow a single selected item.
 
-If set to `multi` users can use `<ctrl>` and `<shift>` to select multiple items using either a mouse or keyboard. 
+If set to `multi` users can use `<ctrl>` and `<shift>` to select multiple items using either a mouse or keyboard.
 
 When set to `toggle` the selection model supports multiple selections, but selections are "sticky". Once selected they can only be deselect by selecting them again. This is useful on, for example, touch devices.
 
@@ -38,7 +38,7 @@ Set to `off` to disable the selection.
 
 Defaults to `multi`.
 
-### `properties` <object>
+### `properties` \<object\>
 
 The selection binding will by default look for `selected` and `focused` observable properties on your `foreach` items and set them to true when the item is selected or focused. Using the `properties` option you can override these default property names to something else. For example:
 
