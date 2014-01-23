@@ -38,6 +38,14 @@ Set to `off` to disable the selection.
 
 Defaults to `multi`.
 
+### `direction` \<string\>
+
+Set to `horizontal` to allow navigating with left/right arrow keys, when `mode` is either `single` or `multi`.
+
+When set to `vertical`, the up/down arrow keys are available for navigating.
+
+Defaults to `vertical`.
+
 ### `properties` \<object\>
 
 The selection binding will by default look for `selected` and `focused` observable properties on your `foreach` items and set them to true when the item is selected or focused. Using the `properties` option you can override these default property names to something else. For example:
