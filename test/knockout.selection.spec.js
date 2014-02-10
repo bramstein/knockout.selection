@@ -321,6 +321,77 @@ describe('Selection', function () {
         });
     });
 
+    describe('in single selection mode, horizontal', function () {
+        beforeEach(function () {
+            element = createTestElement(
+                "foreach: items, selection: { selection: selection, mode: 'single', direction: 'horizontal', focused: focused, anchor: anchor }",
+                'attr: { id: id }, css: { selected: selected }'
+            );
+            ko.applyBindings(model, element);
+        });
+
+        describe('with no selection', function () {
+            it('selects the element after the focused element on right-arrow', function () {
+                model.focusItem(3);
+                arrowRight($('ul', element));
+                expect($('#item4')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects the element before the focused element on left-arrow', function () {
+                model.focusItem(3);
+                arrowLeft($('ul', element));
+                expect($('#item2')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            describe('when first element is focused', function () {
+                beforeEach(function () {
+                    model.focusItem(0);
+                });
+
+                it('selects the focused element on left-arrow', function () {
+                    arrowLeft($('ul', element));
+                    expect($('#item0')).to.have.cssClass('selected');
+                    expect(element).to.have.selectionCount(1);
+                });
+            });
+
+            describe('when last element is focused', function () {
+                beforeEach(function () {
+                    model.focusItem(9);
+                });
+
+                it('selects the focused element on right-arrow', function () {
+                    arrowRight($('ul', element));
+                    expect($('#item9')).to.have.cssClass('selected');
+                    expect(element).to.have.selectionCount(1);
+                });
+            });
+        });
+
+        describe('with one selected item', function () {
+            beforeEach(function () {
+                model.select(7);
+                model.focusItem(7);
+            });
+
+            it('selects next element on right-arrow', function () {
+                arrowRight($('ul', element));
+                expect($('#item7')).to.not.have.cssClass('selected');
+                expect($('#item8')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects previous element on left-arrow', function () {
+                arrowLeft($('ul', element));
+                expect($('#item7')).to.not.have.cssClass('selected');
+                expect($('#item6')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+        });
+    });
+
     describe('in toggle selection mode', function () {
         beforeEach(function () {
             element = createTestElement(
@@ -948,6 +1019,224 @@ describe('Selection', function () {
             }, 0);
             expect(focusCount).to.be(1);
             expect(model.items()[4].focused()).to.be.ok();
+        });
+    });
+
+    describe('in multiple selection mode, horizontal', function () {
+        beforeEach(function () {
+            element = createTestElement(
+                'foreach: items, selection: { selection: selection, focused: focused, anchor: anchor, direction: "horizontal" }',
+                'attr: { id: id }, css: { selected: selected, focused: focused }'
+            );
+            ko.applyBindings(model, element);
+        });
+
+        describe('with no selection', function () {
+            it('selects the element after the focused element on right-arrow', function () {
+                model.focusItem(3);
+                arrowRight($('ul', element));
+                expect($('#item4')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects the element before the focused element on left-arrow', function () {
+                model.focusItem(3);
+                arrowLeft($('ul', element));
+                expect($('#item2')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects and focuses the element after the focused element on shift-right-arrow', function () {
+                model.focusItem(3);
+                model.anchorItem(3);
+                arrowRight($('ul', element), { shiftKey: true });
+                expect($('#item3')).to.have.cssClass('selected');
+                expect($('#item4')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(2);
+            });
+
+            it('selects and focuses the element before the focused element on shift-left-arrow', function () {
+                model.focusItem(3);
+                model.anchorItem(3);
+                arrowLeft($('ul', element), { shiftKey: true });
+                expect($('#item3')).to.have.cssClass('selected');
+                expect($('#item2')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(2);
+            });
+
+            describe('when first element is focused', function () {
+                beforeEach(function () {
+                    model.focusItem(0);
+                });
+
+                it('selects the focused element on left-arrow', function () {
+                    arrowLeft($('ul', element));
+                    expect($('#item0')).to.have.cssClass('selected');
+                    expect(element).to.have.selectionCount(1);
+                });
+            });
+
+            describe('when last element is focused', function () {
+                beforeEach(function () {
+                    model.focusItem(9);
+                });
+
+                it('selects the focused element on right-arrow', function () {
+                    arrowRight($('ul', element));
+                    expect($('#item9')).to.have.cssClass('selected');
+                    expect(element).to.have.selectionCount(1);
+                });
+            });
+        });
+
+        describe('with selected items', function () {
+            beforeEach(function () {
+                model.select(7, 4, 2);
+                model.focusItem(2);
+                model.anchorItem(2);
+            });
+
+            it('expands the selection downward on shift-right-arrow', function () {
+                arrowRight($('ul', element), { shiftKey: true });
+                expect(element).to.have.selectionCount(2);
+                [2, 3].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('expands the selection further downward on successive shift-right-arrow', function () {
+                arrowRight($('ul', element), { shiftKey: true });
+                arrowRight($('ul', element), { shiftKey: true });
+                expect(element).to.have.selectionCount(3);
+                [2, 3, 4].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('expands the selection upward on shift-left-arrow', function () {
+                arrowLeft($('ul', element), { shiftKey: true });
+                expect(element).to.have.selectionCount(2);
+                [1, 2].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('expands the selection further upward on successive shift-left-arrow', function () {
+                arrowLeft($('ul', element), { shiftKey: true });
+                arrowLeft($('ul', element), { shiftKey: true });
+                expect(element).to.have.selectionCount(3);
+                [0, 1, 2].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('does not move the selection anchor on successive shift-left/right-arrow', function () {
+                arrowRight($('ul', element), { shiftKey: true });
+                arrowRight($('ul', element), { shiftKey: true });
+                arrowLeft($('ul', element), { shiftKey: true });
+                arrowRight($('ul', element), { shiftKey: true });
+                expect(element).to.have.selectionCount(3);
+                [2, 3, 4].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('maintains the selection on ctrl-right-arrow', function () {
+                arrowRight($('ul', element), { ctrlKey: true });
+                expect(element).to.have.selectionCount(3);
+                [2, 4, 7].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('maintains the selection on successive ctrl-right-arrow', function () {
+                arrowRight($('ul', element), { ctrlKey: true });
+                arrowRight($('ul', element), { ctrlKey: true });
+                expect(element).to.have.selectionCount(3);
+                [2, 4, 7].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('moves the selection anchor downwards on ctrl-right-arrow', function () {
+                arrowRight($('ul', element), { ctrlKey: true });
+                arrowRight($('ul', element), { shiftKey: true });
+                expect(element).to.have.selectionCount(2);
+                [3, 4].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('moves the selection anchor further downward on successive ctrl-right-arrow', function () {
+                arrowRight($('ul', element), { ctrlKey: true });
+                arrowRight($('ul', element), { ctrlKey: true });
+                arrowRight($('ul', element), { shiftKey: true });
+                expect(element).to.have.selectionCount(2);
+                [4, 5].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('maintains the selection on ctrl-left-arrow', function () {
+                arrowLeft($('ul', element), { ctrlKey: true });
+                expect(element).to.have.selectionCount(3);
+                [2, 4, 7].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('maintains the selection on successive ctrl-left-arrow', function () {
+                arrowLeft($('ul', element), { ctrlKey: true });
+                arrowLeft($('ul', element), { ctrlKey: true });
+                expect(element).to.have.selectionCount(3);
+                [2, 4, 7].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
+                });
+            });
+
+            it('moves the selection anchor upward on ctrl-left-arrow', function () {
+                arrowLeft($('ul', element), { ctrlKey: true });
+
+                expect(model.anchor().id).to.be('item1');
+            });
+
+            it('moves the selection anchor further upward on successive ctrl-left-arrow', function () {
+                arrowLeft($('ul', element), { ctrlKey: true });
+                arrowLeft($('ul', element), { ctrlKey: true });
+                expect(model.anchor().id).to.be('item0');
+            });
+
+            it('moves the selection anchor on successive ctrl-left/right-arrow', function () {
+                arrowRight($('ul', element), { ctrlKey: true });
+                arrowRight($('ul', element), { ctrlKey: true });
+                arrowLeft($('ul', element), { ctrlKey: true });
+                expect(model.anchor().id).to.be('item3');
+            });
+
+            it('maintains selection on successive ctrl-left/right-arrow', function () {
+                arrowDown($('ul', element), { ctrlKey: true });
+                arrowDown($('ul', element), { ctrlKey: true });
+                arrowLeft($('ul', element), { ctrlKey: true });
+
+                [2,4,7].forEach(function (index) {
+                    expect($('#item'+index)).to.have.cssClass('selected');
+                });
+                expect(element).to.have.selectionCount(3);
+            });
+
+            it('removes the selection and selects next element on right-arrow', function () {
+                model.focusItem(3);
+                arrowRight($('ul', element));
+                expect(element).to.have.selectionCount(1);
+                expect($('#item4')).to.have.cssClass('selected');
+            });
+
+            it('removes the selection and selects previous element on left-arrow', function () {
+                model.focusItem(3);
+                arrowLeft($('ul', element));
+                expect(element).to.have.selectionCount(1);
+                expect($('#item2')).to.have.cssClass('selected');
+            });
         });
     });
 

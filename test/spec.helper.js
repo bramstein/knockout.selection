@@ -52,8 +52,20 @@ function arrowDown(element, options) {
     keyDown(element, options);
 }
 
+function arrowRight(element, options) {
+    var defaultOptions = { which: 39 };
+    options = $.extend(defaultOptions, options);
+    keyDown(element, options);
+}
+
 function arrowUp(element, options) {
     var defaultOptions = { which: 38 };
+    options = $.extend(defaultOptions, options);
+    keyDown(element, options);
+}
+
+function arrowLeft(element, options) {
+    var defaultOptions = { which: 37 };
     options = $.extend(defaultOptions, options);
     keyDown(element, options);
 }
