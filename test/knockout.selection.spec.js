@@ -117,6 +117,18 @@ describe('Selection', function () {
                 expect(element).to.have.selectionCount(1);
             });
 
+            it('selects first element on down-arrow when there is no focused item', function () {
+                arrowDown($('ul', element));
+                expect($('#item0')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects first element on up-arrow when there is no focused item', function () {
+                arrowUp($('ul', element));
+                expect($('#item0')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
             it('selects first element on home', function () {
                 home($('ul', element));
                 expect($('#item0')).to.have.cssClass('selected');
@@ -345,6 +357,18 @@ describe('Selection', function () {
                 expect(element).to.have.selectionCount(1);
             });
 
+            it('selects the first element on right-arrow when there is no focus', function () {
+                arrowRight($('ul', element));
+                expect($('#item0')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects the first element on left-arrow when there is no focus', function () {
+                arrowLeft($('ul', element));
+                expect($('#item0')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
             describe('when first element is focused', function () {
                 beforeEach(function () {
                     model.focusItem(0);
@@ -551,6 +575,18 @@ describe('Selection', function () {
                 model.focusItem(3);
                 arrowUp($('ul', element));
                 expect($('#item2')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects first element on up-arrow when there is no focused element', function () {
+                arrowUp($('ul', element));
+                expect($('#item0')).to.have.cssClass('selected');
+                expect(element).to.have.selectionCount(1);
+            });
+
+            it('selects first element on down-arrow when there is no focused element', function () {
+                arrowDown($('ul', element));
+                expect($('#item0')).to.have.cssClass('selected');
                 expect(element).to.have.selectionCount(1);
             });
 
