@@ -9,9 +9,6 @@
     "Gustav Nikolaj Olsen"
   ],
   "main": "lib/knockout.selection.js",
-  "dependencies": {
-    "knockout": ">=3.0.0"
-  },
   "scripts": {
     "test": "mocha-phantomjs test/phantomjs.html"
   },
