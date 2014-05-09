@@ -19,6 +19,22 @@
                 color: white;
                 background-color: lightgray;
             }
+
+            .checkbox {
+                display: inline-block;
+                border: thin solid gray;
+                height: 14px;
+                width: 14px;
+                margin: 2px;
+                vertical-align: bottom;
+            }
+
+            .selected .checkbox {
+                background-color: white;
+                background-image: url(images/checkmark.png);
+                background-repeat: no-repeat;
+                background-position: center center;
+            }
         </style>
     </head>
     <body>
@@ -54,6 +70,13 @@
             <h1>Multiple selections</h1>
             <ul data-bind="foreach: items, selection: { selection: selection, focused: focused }" tabindex="-1">
                 <li data-bind="text: text, css: { selected: selected, focused: focused }"></li>
+            </ul>
+        </div>
+
+        <div class="multi-with-toggle-class">
+            <h1>Multiple selections with a toggle element</h1>
+            <ul data-bind="foreach: items, selection: { selection: selection, focused: focused, toggleClass: 'checkbox' }" tabindex="-1">
+                <li data-bind="css: { selected: selected, focused: focused }"><span class="checkbox"></span><span data-bind="text: text"></span></li>
             </ul>
         </div>
 
@@ -170,6 +193,17 @@
                 };
 
             ko.applyBindings(multiSelection, window.document.querySelector('.multi'));
+
+            /**
+             * Using a toggle element in combination with a multiple selections.
+             */
+            var multiSelectionWithtoggleClass = {
+                    items: ko.observableArray(createItems(10)),
+                    selection: ko.observableArray(),
+                    focused: ko.observable()
+                };
+
+            ko.applyBindings(multiSelectionWithtoggleClass, window.document.querySelector('.multi-with-toggle-class'));
 
             /**
              * Allow multiple selections with a focused item.

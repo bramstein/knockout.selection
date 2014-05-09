@@ -56,6 +56,24 @@ The selection binding will by default look for `selected` and `focused` observab
 
 This will set the `active` and `highlight` observable properties on items in `mylist` when they are selected or focused.
 
+### `toggleClass` \<string\>
+
+In multi selection mode you can mark an element as a selection toggle. Clicking inside such an element will toggle the selection of the item the same way `<ctrl>`-clicking does.
+
+This is useful if you want checkboxes for the selected items.
+
+Example where the `toggleClass` is set to `checkbox`:
+
+```html
+<ul data-bind="foreach: items,
+               selection: { selection: selection, toggleClass: 'checkbox' }">
+    <li data-bind="css: { selected: selected, focused: focused }">
+        <span class="checkbox"></span>
+        <span data-bind="text: text"></span>
+    </li>
+</ul>
+```
+
 ## Running the tests
 
 This test suite uses [Mocha](http://visionmedia.github.com/mocha/) and
