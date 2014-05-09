@@ -1,5 +1,6 @@
-/*global describe, it, expect, beforeEach, ko, $, toArray,
-         createTestElement, click, space, arrowDown, arrowUp, keyDown, keyUp*/
+/*global describe, it, expect, beforeEach, afterEach, ko, $, toArray,
+         createTestElement, click, space, arrowDown, arrowUp, arrowRight, arrowLeft,
+         keyDown, keyUp, home, end*/
 function createItems(size) {
     var result = [];
 
@@ -46,7 +47,7 @@ describe('Selection', function () {
         // Use a setTimeout so IE8 doesn't run out of stack space (see
         // https://github.com/visionmedia/mocha/issues/502)
         window.setTimeout(function () {
-          done();
+            done();
         }, 0);
     });
 
@@ -845,8 +846,8 @@ describe('Selection', function () {
                 arrowDown($('ul', element), { ctrlKey: true });
                 arrowUp($('ul', element), { ctrlKey: true });
 
-                [2,4,7].forEach(function (index) {
-                    expect($('#item'+index)).to.have.cssClass('selected');
+                [2, 4, 7].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
                 });
                 expect(element).to.have.selectionCount(3);
             });
@@ -855,8 +856,8 @@ describe('Selection', function () {
                 home($('ul', element), { shiftKey: true });
 
                 expect(element).to.have.selectionCount(3);
-                [0,1,2].forEach(function (index) {
-                    expect($('#item'+index)).to.have.cssClass('selected');
+                [0, 1, 2].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
                 });
             });
 
@@ -864,8 +865,8 @@ describe('Selection', function () {
                 end($('ul', element), { shiftKey: true });
 
                 expect(element).to.have.selectionCount(8);
-                [2,3,4,5,6,7,8,9].forEach(function (index) {
-                    expect($('#item'+index)).to.have.cssClass('selected');
+                [2, 3, 4, 5, 6, 7, 8, 9].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
                 });
             });
 
@@ -874,8 +875,8 @@ describe('Selection', function () {
                 expect(model.anchor().id).to.be('item0');
 
                 expect(element).to.have.selectionCount(3);
-                [2,4,7].forEach(function (index) {
-                    expect($('#item'+index)).to.have.cssClass('selected');
+                [2, 4, 7].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
                 });
             });
 
@@ -890,11 +891,11 @@ describe('Selection', function () {
             });
 
             it('expands selection with range from anchor to top on ctrl-shift-home', function () {
-                home($('ul', element), { ctrlKey:true, shiftKey: true });
+                home($('ul', element), { ctrlKey: true, shiftKey: true });
 
                 expect(element).to.have.selectionCount(5);
-                [0,1,2,4,7].forEach(function (index) {
-                    expect($('#item'+index)).to.have.cssClass('selected');
+                [0, 1, 2, 4, 7].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
                 });
             });
 
@@ -904,8 +905,8 @@ describe('Selection', function () {
                 end($('ul', element), { ctrlKey: true, shiftKey: true });
 
                 expect(element).to.have.selectionCount(6);
-                [2,4,6,7,8,9].forEach(function (index) {
-                    expect($('#item'+index)).to.have.cssClass('selected');
+                [2, 4, 6, 7, 8, 9].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
                 });
             });
 
@@ -1254,8 +1255,8 @@ describe('Selection', function () {
                 arrowDown($('ul', element), { ctrlKey: true });
                 arrowLeft($('ul', element), { ctrlKey: true });
 
-                [2,4,7].forEach(function (index) {
-                    expect($('#item'+index)).to.have.cssClass('selected');
+                [2, 4, 7].forEach(function (index) {
+                    expect($('#item' + index)).to.have.cssClass('selected');
                 });
                 expect(element).to.have.selectionCount(3);
             });
@@ -1334,7 +1335,7 @@ describe('Selection', function () {
             });
 
             it('maintains focus, anchor and selection when dropping below the display threshold', function () {
-                model.items(model.items.slice(0,5));
+                model.items(model.items.slice(0, 5));
                 expect(model.selection().length).to.be(2);
                 expect(model.focused()).to.be(model.items()[2]);
                 expect(model.anchor()).to.be(model.items()[2]);
