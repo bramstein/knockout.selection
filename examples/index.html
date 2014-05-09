@@ -232,8 +232,8 @@
                     selection: ko.observableArray()
                 };
                 subsetSelection.selectable = ko.computed(function () {
-                    return subsetSelection.items().filter(function (item, index) {
-                        return index % 2 === 0;
+                    return ko.utils.arrayFilter(subsetSelection.items(), function (item) {
+                        return subsetSelection.items.indexOf(item) % 2 === 0;
                     });
                 });
 
