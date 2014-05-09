@@ -1,27 +1,27 @@
 /*global $, beforeEach, expect*/
 function createTestElement(listBindings, itemBindings, parentBinding) {
-  var testContainer = $('#test'),
-      elementContainer = $('<div></div>'),
-      list = $('<ul tabindex="-1"></ul>');
+    var testContainer = $('#test'),
+    elementContainer = $('<div></div>'),
+    list = $('<ul tabindex="-1"></ul>');
 
-  if (parentBinding) {
-      elementContainer.attr('data-bind', parentBinding);
-  }
+    if (parentBinding) {
+        elementContainer.attr('data-bind', parentBinding);
+    }
 
-  list.attr('data-bind', listBindings);
-  elementContainer.append(list);
+    list.attr('data-bind', listBindings);
+    elementContainer.append(list);
 
-  if (itemBindings) {
-      var item = $('<li></li>');
+    if (itemBindings) {
+        var item = $('<li></li>');
 
-      item.attr('data-bind', itemBindings);
-      list.append(item);
-  }
+        item.attr('data-bind', itemBindings);
+        list.append(item);
+    }
 
-  testContainer.empty();
-  testContainer.append(elementContainer);
+    testContainer.empty();
+    testContainer.append(elementContainer);
 
-  return elementContainer.get(0);
+    return elementContainer.get(0);
 }
 
 function click(element, options) {
@@ -91,6 +91,7 @@ function end(element, options) {
 function toArray(args) {
     return Array.prototype.slice.call(args);
 }
+
 beforeEach(function () {
     expect.Assertion.prototype.cssClass = function (expected) {
         var $element = $(this.obj);
