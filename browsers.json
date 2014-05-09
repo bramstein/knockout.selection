@@ -69,13 +69,6 @@
     "timeout": "300"
   },
   {
-    "os_version": "2.3",
-    "device": "Samsung Galaxy S II",
-    "os": "android",
-    "browser": "Android Browser",
-    "timeout": "300"
-  },
-  {
     "os_version": "4.2",
     "device": "LG Nexus 4",
     "os": "android",
