@@ -12,92 +12,92 @@
             }
 
             .focused {
-                outline: 1px solid gray;
+                outline: 1px solid grey;
             }
 
             .selected {
                 color: white;
-                background-color: lightgray;
+                background-color: lightgrey;
             }
         </style>
     </head>
     <body>
-        <div class="single">
+        <div id="single">
             <h1>Single selection</h1>
             <ul data-bind="foreach: items, selection: { selection: selection, mode: 'single' }" tabindex="-1">
-                <li data-bind="text: text, css: { selected: selected }"></li>
+                <li data-bind="text: text, css: { selected: selected }" unselectable="on"></li>
             </ul>
         </div>
 
-        <div class="single-horizontal">
+        <div id="single-horizontal">
             <h1>Single selection, horizontal</h1>
             <div data-bind="foreach: items, selection: { selection: selection, mode: 'single', direction: 'horizontal' }" tabindex="-1">
-                <span data-bind="text: text, css: { selected: selected }"></span>
+                <span data-bind="text: text, css: { selected: selected }" unselectable="on"></span>
             </div>
         </div>
 
-        <div class="toggle">
+        <div id="toggle">
             <h1>Toggle selection</h1>
             <ul data-bind="foreach: items, selection: { selection: selection, mode: 'toggle' }" tabindex="-1">
-                <li data-bind="text: text, css: { selected: selected, focused: focused }"></li>
+                <li data-bind="text: text, css: { selected: selected, focused: focused }" unselectable="on"></li>
             </ul>
         </div>
 
-        <div class="off">
+        <div id="off">
             <h1>Selection off</h1>
             <ul data-bind="foreach: items, selection: { selection: selection, mode: 'off' }" tabindex="-1">
-                <li data-bind="text: text, css: { selected: selected, focused: focused }"></li>
+                <li data-bind="text: text, css: { selected: selected, focused: focused }" unselectable="on"></li>
             </ul>
         </div>
 
-        <div class="multi">
+        <div id="multi">
             <h1>Multiple selections</h1>
             <ul data-bind="foreach: items, selection: { selection: selection, focused: focused }" tabindex="-1">
-                <li data-bind="text: text, css: { selected: selected, focused: focused }"></li>
+                <li data-bind="text: text, css: { selected: selected, focused: focused }" unselectable="on"></li>
             </ul>
         </div>
 
-        <div class="multi-nested">
+        <div id="multi-nested">
             <h1>Multiple selections with nested scoping</h1>
             <ul data-bind="foreach: items, selection: { selection: selection, focused: focused }" tabindex="-1">
-                <li data-bind="css: { selected: selected, focused: focused }">
-                    <span data-bind="text: text"></span>
-                    <ul data-bind="foreach: ['Sub-item 1', 'Sub-item 2', 'Sub-item 3']">
-                        <li data-bind="text: $data"></li>
+                <li data-bind="css: { selected: selected, focused: focused }" unselectable="on">
+                    <span data-bind="text: text" unselectable="on"></span>
+                    <ul data-bind="foreach: ['Sub-item 1', 'Sub-item 2', 'Sub-item 3']" unselectable="on">
+                        <li data-bind="text: $data" unselectable="on"></li>
                     </ul>
                 </li>
             </ul>
         </div>
 
-        <div class="multi-horizontal">
+        <div id="multi-horizontal">
             <h1>Multiple selections, horizontal</h1>
             <div data-bind="foreach: items, selection: { selection: selection, focused: focused, direction: 'horizontal' }" tabindex="-1">
-                <span data-bind="text: text, css: { selected: selected, focused: focused }"></span>
+                <span data-bind="text: text, css: { selected: selected, focused: focused }" unselectable="on"></span>
             </div>
         </div>
 
-        <div class="template">
+        <div id="template">
             <h1>Template selection</h1>
             <ul data-bind="template: { foreach: items, name: 'items-template' }, selection: selection" tabindex="-1"></ul>
         </div>
 
-        <div class="dynamic">
+        <div id="dynamic">
             <h1>Switching selection mode on-the-fly</h1>
             <select data-bind="options: modes, value: mode"></select>
             <ul data-bind="foreach: items, selection: { selection: selection, mode: mode }" tabindex="-1">
-                <li data-bind="text: text, css: { selected: selected, focused: focused }"></li>
+                <li data-bind="text: text, css: { selected: selected, focused: focused }" unselectable="on"></li>
             </ul>
         </div>
 
-        <div class="subset">
+        <div id="subset">
             <h1>Subset selection (items with even index)</h1>
             <ul data-bind="foreach: items, selection: { selection: selection, data: selectable,  mode: 'toggle' }" tabindex="-1">
-                <li data-bind="text: text, css: { selected: selected, focused: focused }"></li>
+                <li data-bind="text: text, css: { selected: selected, focused: focused }" unselectable="on"></li>
             </ul>
         </div>
 
         <script type="text/html" id="items-template">
-            <li data-bind="text: text, css: { selected: selected, focused: focused }"></li>
+            <li data-bind="text: text, css: { selected: selected, focused: focused }" unselectable="on"></li>
         </script>
 
         <script src="../vendor/knockout-3.0.0.debug.js"></script>
@@ -126,7 +126,7 @@
                     selection: ko.observableArray()
                 };
 
-            ko.applyBindings(singleSelection, window.document.querySelector('.single'));
+            ko.applyBindings(singleSelection, window.document.getElementById('single'));
 
             /**
              * Create a simple selection model that only allows
@@ -137,7 +137,7 @@
                     selection: ko.observableArray()
                 };
 
-            ko.applyBindings(singleHorizontalSelection, window.document.querySelector('.single-horizontal'));
+            ko.applyBindings(singleHorizontalSelection, window.document.getElementById('single-horizontal'));
 
             /**
              * Create a toggle selection model that allows selecting
@@ -148,7 +148,7 @@
                     selection: ko.observableArray()
                 };
 
-            ko.applyBindings(toggleSelection, window.document.querySelector('.toggle'));
+            ko.applyBindings(toggleSelection, window.document.getElementById('toggle'));
 
             /**
              * Create an off selection model that does not allow selecting items.
@@ -158,7 +158,7 @@
                     selection: ko.observableArray()
                 };
 
-            ko.applyBindings(offSelection, window.document.querySelector('.off'));
+            ko.applyBindings(offSelection, window.document.getElementById('off'));
 
             /**
              * Allow multiple selections with a focused item.
@@ -169,7 +169,7 @@
                     focused: ko.observable()
                 };
 
-            ko.applyBindings(multiSelection, window.document.querySelector('.multi'));
+            ko.applyBindings(multiSelection, window.document.getElementById('multi'));
 
             /**
              * Allow multiple selections with a focused item.
@@ -180,7 +180,7 @@
                     focused: ko.observable()
                 };
 
-            ko.applyBindings(multiHorizontalSelection, window.document.querySelector('.multi-horizontal'));
+            ko.applyBindings(multiHorizontalSelection, window.document.getElementById('multi-horizontal'));
 
             /**
              * Allow multiple selections with a focused item and nested scopes.
@@ -191,7 +191,7 @@
                     focused: ko.observable()
                 };
 
-            ko.applyBindings(multiNestScopeSelection, window.document.querySelector('.multi-nested'));
+            ko.applyBindings(multiNestScopeSelection, window.document.getElementById('multi-nested'));
 
             /**
              * Using a template is the same as others. To spice things up
@@ -205,7 +205,7 @@
             // Programmatically set the selection to the 5th and 8th item
             templateSelection.selection([templateSelection.items()[4], templateSelection.items()[7]]);
 
-            ko.applyBindings(templateSelection, window.document.querySelector('.template'));
+            ko.applyBindings(templateSelection, window.document.getElementById('template'));
 
             /**
              * Change selection modes on the fly
@@ -222,7 +222,7 @@
                     ]
                 };
 
-            ko.applyBindings(dynamicSelection, window.document.querySelector('.dynamic'));
+            ko.applyBindings(dynamicSelection, window.document.getElementById('dynamic'));
 
             /**
              * Selecting in a subset of the listed items, in this case the items with even indexes
@@ -237,7 +237,7 @@
                     });
                 });
 
-            ko.applyBindings(subsetSelection, window.document.querySelector('.subset'));
+            ko.applyBindings(subsetSelection, window.document.getElementById('subset'));
 
         </script>
     </body>

@@ -12,7 +12,7 @@ describe('EventMatcher', function () {
 
     it('matches with one handler and one matcher', function (done) {
         eventMatcher.register({ which: 1 }, function (e) {
-            expect(e).to.eql({ which: 1 });
+            expect(e.which).to.be(1);
             done();
         });
 
@@ -21,11 +21,11 @@ describe('EventMatcher', function () {
 
     it('matches with multiple handlers', function (done) {
         eventMatcher.register({ which: 1 }, function (e) {
-            expect(e).to.eql({ which: 1 });
+            expect(e.which).to.be(1);
         });
 
         eventMatcher.register({ which: 2 }, function (e) {
-            expect(e).to.eql({ which: 2 });
+            expect(e.which).to.be(2);
             done();
         });
 
@@ -35,6 +35,7 @@ describe('EventMatcher', function () {
 
     it('matches with multiple matchers', function (done) {
         eventMatcher.register({ which: 1 }, { which: 2 }, function (e) {
+            expect(e.which).to.be(2);
             done();
         });
 
