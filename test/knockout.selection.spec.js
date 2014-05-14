@@ -517,9 +517,17 @@ describe('Selection', function () {
     describe('in multiple selection mode', function () {
         beforeEach(function () {
             element = createTestElement(
-                'foreach: items, selection: { selection: selection, focused: focused, anchor: anchor }',
-                'attr: { id: id }, css: { selected: selected, focused: focused }'
+                'foreach: items, selection: { selection: selection, focused: focused, anchor: anchor, toggleClass: \'checkbox\' }'
             );
+
+            var item = $('<li data-bind="attr: { id: id }, css: { selected: selected, focused: focused }">' +
+                         '  <span class="checkbox">' +
+                         '    <span class="inside-checkbox"></span>' +
+                         '  </span>' +
+                         '</li>');
+
+            $('ul', element).append(item);
+
             ko.applyBindings(model, element);
         });
 
@@ -1018,6 +1026,102 @@ describe('Selection', function () {
                     expect($('#item7')).to.have.cssClass('selected');
                     expect(model.selection().length).to.be(1);
                 });
+            });
+
+            describe('clicking on an element that have the toggleClass', function () {
+                describe('and the item is selected', function () {
+                    beforeEach(function () {
+                        click($('#item7 .checkbox'));
+                    });
+
+                    it('unselects the item', function () {
+                        expect($('#item7')).not.to.have.cssClass('selected');
+                    });
+
+                    it('does not change the selection of the other items', function () {
+                        expect(element).to.have.selectionCount(2);
+                        expect($('#item2')).to.have.cssClass('selected');
+                        expect($('#item4')).to.have.cssClass('selected');
+                    });
+
+                    it('sets the item as the focus', function () {
+                        expect(model.focused().id).to.be('item7');
+                    });
+
+                    it('sets the item as the anchor', function () {
+                        expect(model.anchor().id).to.be('item7');
+                    });
+                });
+
+                describe('and the item is not selected', function () {
+                    beforeEach(function () {
+                        click($('#item3 .checkbox'));
+                    });
+
+                    it('selects the item in addition to the current selection', function () {
+                        expect(element).to.have.selectionCount(4);
+                        expect($('#item3')).to.have.cssClass('selected');
+                        expect($('#item2')).to.have.cssClass('selected');
+                        expect($('#item4')).to.have.cssClass('selected');
+                        expect($('#item7')).to.have.cssClass('selected');
+                    });
+
+                    it('sets the item as the focus', function () {
+                        expect(model.focused().id).to.be('item3');
+                    });
+
+                    it('sets the item as the anchor', function () {
+                        expect(model.anchor().id).to.be('item3');
+                    });
+                });
+            });
+        });
+
+        describe('clicking on an element that have the toggleClass', function () {
+            beforeEach(function () {
+                click($('#item7 .checkbox'));
+            });
+
+            it('selects the item', function () {
+                expect($('#item7')).to.have.cssClass('selected');
+            });
+
+            it('sets the item as the focus', function () {
+                expect(model.focused().id).to.be('item7');
+            });
+
+            it('sets the item as the anchor', function () {
+                expect(model.anchor().id).to.be('item7');
+            });
+        });
+
+        describe('clicking on an element inside an element that have the toggleClass', function () {
+            beforeEach(function () {
+                click($('#item7 .inside-checkbox'));
+            });
+
+            it('selects the item', function () {
+                expect($('#item7')).to.have.cssClass('selected');
+            });
+
+            it('sets the item as the focus', function () {
+                expect(model.focused().id).to.be('item7');
+            });
+
+            it('sets the item as the anchor', function () {
+                expect(model.anchor().id).to.be('item7');
+            });
+        });
+
+        describe('clicking on elements that have the toggleClass', function () {
+            it('sets the item as the focus', function () {
+                click($('#item7 .checkbox'));
+                expect(model.focused().id).to.be('item7');
+            });
+
+            it('sets the item as the anchor', function () {
+                click($('#item7 .checkbox'));
+                expect(model.anchor().id).to.be('item7');
             });
         });
 
