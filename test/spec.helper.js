@@ -92,25 +92,13 @@ function toArray(args) {
     return Array.prototype.slice.call(args);
 }
 
-beforeEach(function () {
-    expect.Assertion.prototype.cssClass = function (expected) {
-        var $element = $(this.obj);
-        var elementClasses = ($element.attr('class') || '').split(' ');
+expect.addAssertion('cssClass', '[not] to have css class', function (expect, subject, value) {
+    var $element = $(subject);
+    var elementClasses = ($element.attr('class') || '').split(' ');
+    expect(elementClasses, '[not] to contain', value);
+});
 
-        this.obj = elementClasses;
-        this.contain(expected);
-
-        return this;
-    };
-
-    expect.Assertion.prototype.selectionCount = function (expected) {
-        var selectionCount = $('.selected', this.obj).length;
-
-        this.assert(
-            selectionCount === expected,
-            function () { return 'expected list to have ' + expected + ' selected items but got ' + selectionCount; },
-            function () { return 'expected list to not have ' + expected + ' selected items but got ' + selectionCount; });
-
-        return this;
-    };
+expect.addAssertion('selectionCount', 'to have selection count', function (expect, subject, value) {
+    var selection = $('.selected', subject);
+    expect(selection, 'to have length', value);
 });
