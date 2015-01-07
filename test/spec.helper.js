@@ -92,7 +92,7 @@ function toArray(args) {
     return Array.prototype.slice.call(args);
 }
 
-expect.addAssertion('cssClass', '[not] to have css class', function (expect, subject, value) {
+expect.addAssertion('cssClass', '[not] to have css class', function (expect, subject, value) {
     var $element = $(subject);
     var elementClasses = ($element.attr('class') || '').split(' ');
     expect(elementClasses, '[not] to contain', value);
