@@ -1598,7 +1598,7 @@ defineTest([
             });
         });
 
-        describe('in late selection mode', function () {
+        describe('with late selection', function () {
             var items;
 
             beforeEach(function () {
@@ -1629,7 +1629,46 @@ defineTest([
                 specHelper.mouseup($('#item1'));
                 expect(model.selection(), 'to have length', 1);
             });
+
+            describe('in single mode', function () {
+                beforeEach(function () {
+                    model.mode('single');
+                });
+
+                it('delays selection until mouseup on same element', function () {
+                    specHelper.mousedown($('#item1'));
+                    expect(model.selection(), 'to have length', 0);
+                    specHelper.mouseup($('#item1'));
+                    expect(model.selection(), 'to have length', 1);
+                });
+
+                it('does not select if mousedown and mouseup on different elements', function () {
+                    specHelper.mousedown($('#item1'));
+                    expect(model.selection(), 'to have length', 0);
+                    specHelper.mouseup($('#item2'));
+                    expect(model.selection(), 'to have length', 0);
+                });
+            });
+
+            describe('in multi mode', function () {
+                beforeEach(function () {
+                    model.mode('multi');
+                });
+
+                it('delays selection until mouseup on same element', function () {
+                    specHelper.mousedown($('#item1'));
+                    expect(model.selection(), 'to have length', 0);
+                    specHelper.mouseup($('#item1'));
+                    expect(model.selection(), 'to have length', 1);
+                });
+
+                it('does not select if mousedown and mouseup on different elements', function () {
+                    specHelper.mousedown($('#item1'));
+                    expect(model.selection(), 'to have length', 0);
+                    specHelper.mouseup($('#item2'));
+                    expect(model.selection(), 'to have length', 0);
+                });
+            });
         });
     });
-
 });
