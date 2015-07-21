@@ -8,7 +8,6 @@
     <div id="mocha"></div>
     <div style="display: none" id="test"></div>
 
-    <script src="../vendor/expect.js"></script>
     <script src="../node_modules/mocha/mocha.js"></script>
     <script src="requirejs-mocha.js"></script>
 
@@ -17,7 +16,8 @@
             baseUrl: '..',
             paths: {
                 jquery: 'vendor/jquery-1.10.2',
-                knockout: 'vendor/knockout-3.0.0.debug'
+                knockout: 'vendor/knockout-3.0.0.debug',
+                unexpected: 'node_modules/unexpected/unexpected'
             }
         };
     </script>

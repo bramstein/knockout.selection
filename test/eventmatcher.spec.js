@@ -1,7 +1,10 @@
 /*global describe, beforeEach, it */
 defineTest([
+    'unexpected',
     'lib/eventmatcher'
-], function (EventMatcher) {
+], function (unexpected, EventMatcher) {
+    var expect = unexpected.clone();
+
     describe('EventMatcher', function () {
         var eventMatcher = null;
 
@@ -10,12 +13,12 @@ defineTest([
         });
 
         it('has an empty handlers list', function () {
-            expect(eventMatcher.handlers).to.eql([]);
+            expect(eventMatcher.handlers, 'to equal', []);
         });
 
         it('matches with one handler and one matcher', function (done) {
             eventMatcher.register({ which: 1 }, function (e) {
-                expect(e).to.eql({ which: 1 });
+                expect(e, 'to equal', { which: 1 });
                 done();
             });
 
@@ -24,11 +27,11 @@ defineTest([
 
         it('matches with multiple handlers', function (done) {
             eventMatcher.register({ which: 1 }, function (e) {
-                expect(e).to.eql({ which: 1 });
+                expect(e, 'to equal', { which: 1 });
             });
 
             eventMatcher.register({ which: 2 }, function (e) {
-                expect(e).to.eql({ which: 2 });
+                expect(e, 'to equal', { which: 2 });
                 done();
             });
 

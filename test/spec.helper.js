@@ -1,7 +1,8 @@
 /*global beforeEach, expect*/
 define([
-    'jquery'
-], function ($) {
+    'jquery',
+    'unexpected'
+], function ($, unexpected) {
     function SpecHelper() {
     };
 
@@ -98,28 +99,20 @@ define([
         return Array.prototype.slice.call(args);
     }
 
-    beforeEach(function () {
-        expect.Assertion.prototype.cssClass = function (expected) {
-            var $element = $(this.obj);
+    SpecHelper.prototype.installInto = function (expect) {
+        expect.addAssertion('[not] to have css class', function (expect, subject, className) {
+            var $element = $(subject);
             var elementClasses = ($element.attr('class') || '').split(' ');
 
-            this.obj = elementClasses;
-            this.contain(expected);
+            expect(elementClasses, '[not] to contain', className);
+        });
 
-            return this;
-        };
+        expect.addAssertion('to have selection count', function (expect, subject, selectionCount) {
+            var actualCount = $('.selected', subject).length;
 
-        expect.Assertion.prototype.selectionCount = function (expected) {
-            var selectionCount = $('.selected', this.obj).length;
-
-            this.assert(
-                selectionCount === expected,
-                function () { return 'expected list to have ' + expected + ' selected items but got ' + selectionCount; },
-                function () { return 'expected list to not have ' + expected + ' selected items but got ' + selectionCount; });
-
-            return this;
-        };
-    });
+            expect(selectionCount, 'to equal', actualCount);
+        });
+    };
 
     var specHelper = new SpecHelper();
 
