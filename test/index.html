@@ -8,20 +8,22 @@
     <div id="mocha"></div>
     <div style="display: none" id="test"></div>
 
-    <script src="../vendor/expect.js"></script>
+    <script src="../vendor/es5-shim.js"></script>
     <script src="../node_modules/mocha/mocha.js"></script>
     <script src="../node_modules/mocha-browserstack/lib/mocha-browserstack.js"></script>
-    <script src="../vendor/jquery-1.10.2.js"></script>
-    <script src="../vendor/knockout-3.0.0.debug.js"></script>
-    <script src="../vendor/es5-shim.js"></script>
-    <script src="../lib/eventmatcher.js"></script>
-    <script src="../lib/knockout.selection.js"></script>
-    <script>mocha.ui('bdd').reporter(Mocha.BrowserStack);</script>
-    <script src="spec.helper.js"></script>
-    <script src="knockout.selection.spec.js"></script>
-    <script src="eventmatcher.spec.js"></script>
+    <script src="requirejs-mocha.js"></script>
+
     <script>
-        mocha.run();
+        var require = {
+            baseUrl: '..',
+            paths: {
+                jquery: 'vendor/jquery-1.10.2',
+                knockout: 'vendor/knockout-3.0.0.debug',
+                unexpected: 'node_modules/unexpected/unexpected'
+            }
+        };
     </script>
+
+    <script src="../node_modules/requirejs/require.js" data-main="test/runner"></script>
   </body>
 </html>
