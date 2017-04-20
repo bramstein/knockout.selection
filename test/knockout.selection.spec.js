@@ -681,6 +681,12 @@ defineTest([
                     model.anchorItem(2);
                 });
 
+                it('should not add duplicates when ctrl-shift-clicking with a range that overlaps the selection', function () {
+                    expect(model.selection(), 'to have length', 3);
+                    specHelper.click($('#item1'), { ctrlKey: true, shiftKey: true });
+                    expect(model.selection(), 'to have length', 4);
+                });
+
                 it('expands the selection with ctrl-click', function () {
                     specHelper.click($('#item3'), { ctrlKey: true });
                     expect(element, 'to have selection count', 4);
