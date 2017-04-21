@@ -43,6 +43,26 @@ define([
         element.trigger($.Event("click", options));
     }
 
+    SpecHelper.prototype.mousedown = function (element, options) {
+        var defaultOptions = {
+            which: 1,
+            shiftKey: false,
+            ctrlKey: false
+        };
+        options = $.extend(defaultOptions, options);
+        element.trigger($.Event("mousedown", options));
+    };
+
+    SpecHelper.prototype.mouseup = function (element, options) {
+        var defaultOptions = {
+            which: 1,
+            shiftKey: false,
+            ctrlKey: false
+        };
+        options = $.extend(defaultOptions, options);
+        element.trigger($.Event("mouseup", options));
+    };
+
     SpecHelper.prototype.keyDown = function (element, options) {
         var defaultOptions = {
             shiftKey: false,

@@ -74,6 +74,10 @@ Example where the `toggleClass` is set to `checkbox`:
 </ul>
 ```
 
+### `lateSelect` \<boolean\>
+
+When `true`, delays selection of items to the `mouseup` event, which is useful when you need to intercept events, react to selections without interrupting either this library or for example drag-and-drop actions, etc. Mouseup events on a different element from the mousedown event will not select.
+
 ## Running the tests
 
 This test suite uses [Mocha](http://visionmedia.github.com/mocha/) and
