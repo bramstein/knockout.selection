@@ -80,7 +80,7 @@ When `true`, delays selection of items to the `mouseup` event, which is useful w
 
 ## Running the tests
 
-This test suite uses [Mocha](http://visionmedia.github.com/mocha/) and
+This test suite uses [Mocha](http://mochajs.org/) and
 [Expect.js](https://github.com/LearnBoost/expect.js).
 
 You can run the tests in the browser by opening tests.html. It is also
